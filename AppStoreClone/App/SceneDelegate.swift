@@ -9,11 +9,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-        let navigationController = UINavigationController()
         let appListViewController = AppListViewController()
+        let navigationController = UINavigationController(rootViewController: appListViewController)
         
-        window?.rootViewController = appListViewController
-        appListViewController.view.backgroundColor = .systemBackground
+        window?.rootViewController = navigationController
+        navigationController.view.backgroundColor = .systemBackground
     }
     
 }
