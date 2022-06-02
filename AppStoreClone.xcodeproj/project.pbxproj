@@ -14,6 +14,13 @@
 		DE531A202848C1EC00383973 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE531A1E2848C1EC00383973 /* LaunchScreen.storyboard */; };
 		DE531A292848C33300383973 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = DE531A282848C33300383973 /* RxCocoa */; };
 		DE531A2B2848C33300383973 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE531A2A2848C33300383973 /* RxSwift */; };
+		DE531A332848E5A700383973 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A322848E5A700383973 /* NetworkProvider.swift */; };
+		DE531A372848E68B00383973 /* URLRequest+Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A362848E68B00383973 /* URLRequest+Initializer.swift */; };
+		DE531A392848E6A700383973 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A382848E6A700383973 /* URLSessionProtocol.swift */; };
+		DE531A3B2848E6AD00383973 /* BaseURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A3A2848E6AD00383973 /* BaseURLProtocol.swift */; };
+		DE531A3D2848E6B200383973 /* APIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A3C2848E6B200383973 /* APIProtocol.swift */; };
+		DE531A402848E7AF00383973 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A3F2848E7AF00383973 /* JSONParser.swift */; };
+		DE531A422848E8CE00383973 /* AppStoreURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A412848E8CE00383973 /* AppStoreURL.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,13 @@
 		DE531A1C2848C1EC00383973 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE531A1F2848C1EC00383973 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE531A212848C1EC00383973 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE531A322848E5A700383973 /* NetworkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
+		DE531A362848E68B00383973 /* URLRequest+Initializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Initializer.swift"; sourceTree = "<group>"; };
+		DE531A382848E6A700383973 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
+		DE531A3A2848E6AD00383973 /* BaseURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseURLProtocol.swift; sourceTree = "<group>"; };
+		DE531A3C2848E6B200383973 /* APIProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIProtocol.swift; sourceTree = "<group>"; };
+		DE531A3F2848E7AF00383973 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
+		DE531A412848E8CE00383973 /* AppStoreURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreURL.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +74,11 @@
 			children = (
 				DE531A2C2848C7B800383973 /* App */,
 				DE531A2D2848C7D700383973 /* Presentation */,
-				DE531A1C2848C1EC00383973 /* Assets.xcassets */,
-				DE531A1E2848C1EC00383973 /* LaunchScreen.storyboard */,
+				DE531A302848E56000383973 /* Network */,
+				DE531A342848E63300383973 /* Protocol */,
+				DE531A3E2848E79700383973 /* Utility */,
+				DE531A352848E67000383973 /* Extension */,
+				DE531A312848E56E00383973 /* Resource */,
 				DE531A212848C1EC00383973 /* Info.plist */,
 			);
 			path = AppStoreClone;
@@ -90,6 +107,50 @@
 				DE531A172848C1EC00383973 /* AppListViewController.swift */,
 			);
 			path = AppList;
+			sourceTree = "<group>";
+		};
+		DE531A302848E56000383973 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DE531A322848E5A700383973 /* NetworkProvider.swift */,
+				DE531A412848E8CE00383973 /* AppStoreURL.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DE531A312848E56E00383973 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				DE531A1C2848C1EC00383973 /* Assets.xcassets */,
+				DE531A1E2848C1EC00383973 /* LaunchScreen.storyboard */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		DE531A342848E63300383973 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				DE531A382848E6A700383973 /* URLSessionProtocol.swift */,
+				DE531A3A2848E6AD00383973 /* BaseURLProtocol.swift */,
+				DE531A3C2848E6B200383973 /* APIProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		DE531A352848E67000383973 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DE531A362848E68B00383973 /* URLRequest+Initializer.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		DE531A3E2848E79700383973 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				DE531A3F2848E7AF00383973 /* JSONParser.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,9 +230,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE531A3D2848E6B200383973 /* APIProtocol.swift in Sources */,
+				DE531A392848E6A700383973 /* URLSessionProtocol.swift in Sources */,
+				DE531A402848E7AF00383973 /* JSONParser.swift in Sources */,
 				DE531A182848C1EC00383973 /* AppListViewController.swift in Sources */,
+				DE531A372848E68B00383973 /* URLRequest+Initializer.swift in Sources */,
+				DE531A332848E5A700383973 /* NetworkProvider.swift in Sources */,
 				DE531A142848C1EC00383973 /* AppDelegate.swift in Sources */,
+				DE531A422848E8CE00383973 /* AppStoreURL.swift in Sources */,
 				DE531A162848C1EC00383973 /* SceneDelegate.swift in Sources */,
+				DE531A3B2848E6AD00383973 /* BaseURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

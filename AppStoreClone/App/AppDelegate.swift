@@ -1,8 +1,3 @@
-//
-//  AppDelegate.swift
-//  AppStoreClone
-//
-
 import UIKit
 
 @main

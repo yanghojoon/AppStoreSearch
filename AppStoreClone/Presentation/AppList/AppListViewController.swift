@@ -1,8 +1,3 @@
-//
-//  ViewController.swift
-//  AppStoreClone
-//
-
 import UIKit
 
 class AppListViewController: UIViewController {

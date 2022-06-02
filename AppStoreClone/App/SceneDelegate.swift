@@ -1,8 +1,3 @@
-//
-//  SceneDelegate.swift
-//  AppStoreClone
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
