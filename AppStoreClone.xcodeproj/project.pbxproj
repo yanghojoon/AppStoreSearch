@@ -21,6 +21,7 @@
 		DE531A3D2848E6B200383973 /* APIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A3C2848E6B200383973 /* APIProtocol.swift */; };
 		DE531A402848E7AF00383973 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A3F2848E7AF00383973 /* JSONParser.swift */; };
 		DE531A422848E8CE00383973 /* AppStoreURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A412848E8CE00383973 /* AppStoreURL.swift */; };
+		DE531A4A28490DA500383973 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A4928490DA500383973 /* ListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		DE531A3C2848E6B200383973 /* APIProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIProtocol.swift; sourceTree = "<group>"; };
 		DE531A3F2848E7AF00383973 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		DE531A412848E8CE00383973 /* AppStoreURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreURL.swift; sourceTree = "<group>"; };
+		DE531A4928490DA500383973 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +106,8 @@
 		DE531A2E2848C7F700383973 /* AppList */ = {
 			isa = PBXGroup;
 			children = (
-				DE531A172848C1EC00383973 /* AppListViewController.swift */,
+				DE531A442848FD8900383973 /* View */,
+				DE531A432848FD8100383973 /* ViewModel */,
 			);
 			path = AppList;
 			sourceTree = "<group>";
@@ -151,6 +154,22 @@
 				DE531A3F2848E7AF00383973 /* JSONParser.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		DE531A432848FD8100383973 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DE531A442848FD8900383973 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE531A172848C1EC00383973 /* AppListViewController.swift */,
+				DE531A4928490DA500383973 /* ListCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +255,7 @@
 				DE531A182848C1EC00383973 /* AppListViewController.swift in Sources */,
 				DE531A372848E68B00383973 /* URLRequest+Initializer.swift in Sources */,
 				DE531A332848E5A700383973 /* NetworkProvider.swift in Sources */,
+				DE531A4A28490DA500383973 /* ListCell.swift in Sources */,
 				DE531A142848C1EC00383973 /* AppDelegate.swift in Sources */,
 				DE531A422848E8CE00383973 /* AppStoreURL.swift in Sources */,
 				DE531A162848C1EC00383973 /* SceneDelegate.swift in Sources */,
