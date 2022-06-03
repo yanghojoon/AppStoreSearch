@@ -14,14 +14,13 @@ struct SearchAppListAPI: APIProtocol {
     
     init(base: BaseURLProtocol = AppStoreBaseURL(), path: String = "search", term: String) {
         var urlComponents = URLComponents(string: "\(base.url)\(path)")
-        
-        let countryQuery = URLQueryItem(name: "country", value: "kr")
-        let mediaQuery = URLQueryItem(name: "media", value: "software")
-        let limitQuery = URLQueryItem(name: "limit", value: "\(searchLimit)")
-        let termQuery = URLQueryItem(name: "term", value: term)
-        let queries: [URLQueryItem] = [countryQuery, mediaQuery, limitQuery, termQuery]
-        
-        queries.forEach { urlComponents?.queryItems?.append($0) }
+        let queryItems = [
+            URLQueryItem(name: "country", value: "kr"),
+            URLQueryItem(name: "media", value: "software"),
+            URLQueryItem(name: "limit", value: "\(searchLimit)"),
+            URLQueryItem(name: "term", value: term)
+        ]
+        urlComponents?.queryItems = queryItems
         
         self.url = urlComponents?.url
     }

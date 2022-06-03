@@ -11,14 +11,13 @@ enum JSONParserError: LocalizedError { // TODO: LocalizedError만 있어도 되�
     }
 }
 
-struct JSONParser<Item: Codable> {
+struct JSONParser<Item: Decodable> {
     func decode(from json: Data?) -> Item? {
         guard let data = json else {
             return nil
         }
         
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         guard let decodedData = try? decoder.decode(Item.self, from: data) else { 
             return nil

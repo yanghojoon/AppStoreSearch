@@ -4,16 +4,16 @@ import RxSwift
 struct NetworkProvider {
     
     // MARK: - Properties
-    private let session: URLSession
+    private let session: URLSessionProtocol
     private let disposeBag = DisposeBag()
     
     // MARK: - Initializers
-    init(session: URLSession = URLSession.shared) {
+    init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
     
     // MARK: - Methods
-    func fetchData<T: Codable>(api: APIProtocol, decodingType: T.Type) -> Observable<T> {
+    func fetchData<T: Decodable>(api: APIProtocol, decodingType: T.Type) -> Observable<T> {
         return Observable.create { emitter in
             guard let task = dataTask(api: api, emitter: emitter) else {
                 return Disposables.create()
@@ -26,7 +26,7 @@ struct NetworkProvider {
         }
     }
     
-    private func dataTask<T: Codable>(api: APIProtocol, emitter: AnyObserver<T>) -> URLSessionDataTask? {
+    private func dataTask<T: Decodable>(api: APIProtocol, emitter: AnyObserver<T>) -> URLSessionDataTask? {
         guard let urlRequest = URLRequest(api: api) else {
             emitter.onError(NetworkError.urlIsNil)
             return nil
@@ -49,7 +49,6 @@ struct NetworkProvider {
                 emitter.onNext(decodedData)
             }
         }
-        emitter.onCompleted()
         
         return task
     }

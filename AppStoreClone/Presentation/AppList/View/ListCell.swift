@@ -1,4 +1,11 @@
 import UIKit
+import RxCocoa
+
+protocol ListCellDelegate: AnyObject {
+    
+    func countStar(from rating: Double) -> (empty: Int, fill: Int, half: Int)
+    
+}
 
 class ListCell: UICollectionViewCell {
     
@@ -64,6 +71,7 @@ class ListCell: UICollectionViewCell {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
+        stackView.setContentHuggingPriority(.required, for: .horizontal)
         return stackView
     }()
     
@@ -83,10 +91,18 @@ class ListCell: UICollectionViewCell {
         return button
     }()
     
+    private var delegate: ListCellDelegate!
+    private var viewModel = ListCellViewModel()
+    
     // MARK: - Initializers
-    convenience init() {
-        self.init()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureUI()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Lifecycle Methods
@@ -99,7 +115,25 @@ class ListCell: UICollectionViewCell {
     }
     
     // MARK: - Methods
+    func apply(
+        logoImageURL: String,
+        name: String,
+        genre: String,
+        averageUserRating: Double,
+        userRatingCount: Int,
+        formattedPrice: String
+    ) {
+        logoImageView.loadCachedImage(of: logoImageURL)
+        nameLabel.text = name
+        genreLabel.text = genre
+        userRatingCountLabel.text = userRatingCount.omitDigit
+        priceButton.setTitle(formattedPrice, for: .normal)
+        createStarRating(from: averageUserRating)
+    }
+    
     private func configureUI() {
+        delegate = viewModel
+        
         addSubview(containerStackView)
         containerStackView.addArrangedSubview(logoImageView)
         containerStackView.addArrangedSubview(descriptionStackView)
@@ -120,6 +154,22 @@ class ListCell: UICollectionViewCell {
         ])
     }
     
+    private func createStarRating(from rating: Double) {
+        let starCount = delegate.countStar(from: rating)
+        
+        drawStar(of: starCount.fill, image: Design.starImage)
+        drawStar(of: starCount.half, image: Design.halfStarImage)
+        drawStar(of: starCount.empty, image: Design.emptyStarImage)
+    }
+    
+    private func drawStar(of count: Int, image: UIImage?) {
+        for _ in 0..<count {
+            let imageView = UIImageView()
+            starStackView.addArrangedSubview(imageView)
+            imageView.image = image
+        }
+    }
+    
 }
 
 // MARK: - Namespaces
@@ -138,6 +188,10 @@ extension ListCell {
         static let userRatingCountLabelTextColor: UIColor = .systemGray5
         static let priceButtonBackgroundColor: UIColor = .systemGray
         static let priceButtonTitleColor: UIColor = .systemBlue
+        
+        static let emptyStarImage = UIImage(systemName: "star")
+        static let starImage = UIImage(systemName: "star.fill")
+        static let halfStarImage = UIImage(systemName: "star.leadinghalf.filled")
     }
     
     private enum Content {
