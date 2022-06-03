@@ -21,8 +21,8 @@ class AppListViewController: UIViewController {
     private let searchController = UISearchController()
     private let viewModel = AppListViewModel() // TODO: 의존성 주입으로 수정
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    private var diffableDataSource: UICollectionViewDiffableDataSource<SectionKind, App>!
-    private var snapshot: NSDiffableDataSourceSnapshot<SectionKind, App>!
+    private var diffableDataSource: UICollectionViewDiffableDataSource<SectionKind, HashableApp>!
+    private var snapshot: NSDiffableDataSourceSnapshot<SectionKind, HashableApp>!
     
     private let searchButtonDidTap = PublishSubject<String>()
     private let collectionViewDidScroll = PublishSubject<IndexPath>()
@@ -90,18 +90,18 @@ class AppListViewController: UIViewController {
     }
     
     private func configureCellRegistrationAndDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<ListCell, App> { cell, indexPath, app in
+        let cellRegistration = UICollectionView.CellRegistration<ListCell, HashableApp> { cell, indexPath, hashable in
             cell.apply(
-                logoImageURL: app.artworkUrl100,
-                name: app.trackName,
-                genre: app.primaryGenreName,
-                averageUserRating: app.averageUserRating,
-                userRatingCount: app.userRatingCount,
-                formattedPrice: app.formattedPrice
+                logoImageURL: hashable.app.artworkUrl100,
+                name: hashable.app.trackName,
+                genre: hashable.app.primaryGenreName,
+                averageUserRating: hashable.app.averageUserRating,
+                userRatingCount: hashable.app.userRatingCount,
+                formattedPrice: hashable.app.formattedPrice
             )
         }
         
-        diffableDataSource = UICollectionViewDiffableDataSource<SectionKind, App>(
+        diffableDataSource = UICollectionViewDiffableDataSource<SectionKind, HashableApp>(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, app in
                 guard let sectionKind = SectionKind(rawValue: indexPath.section) else {
@@ -158,7 +158,7 @@ extension AppListViewController {
         configureNextSearchedApps(with: output.nextSearchedApps)
     }
     
-    private func configureSearchedApps(with searchedApps: Observable<[App]>) {
+    private func configureSearchedApps(with searchedApps: Observable<[HashableApp]>) {
         searchedApps
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] apps in
@@ -168,14 +168,14 @@ extension AppListViewController {
             .disposed(by: disposeBag)
     }
     
-    private func configureSnapshot(with apps: [App]) {
-        snapshot = NSDiffableDataSourceSnapshot<SectionKind, App>()
+    private func configureSnapshot(with apps: [HashableApp]) {
+        snapshot = NSDiffableDataSourceSnapshot<SectionKind, HashableApp>()
         snapshot.appendSections([.main])
         snapshot.appendItems(apps)
         diffableDataSource.apply(snapshot)
     }
     
-    private func configureNextSearchedApps(with nextSearchedApps: Observable<[App]>) {
+    private func configureNextSearchedApps(with nextSearchedApps: Observable<[HashableApp]>) {
         nextSearchedApps
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] nextSearchedApps in
@@ -184,7 +184,7 @@ extension AppListViewController {
             .disposed(by: disposeBag)
     }
     
-    private func applySnapshot(with nextSearchedApps: [App]) {
+    private func applySnapshot(with nextSearchedApps: [HashableApp]) {
         snapshot.appendItems(nextSearchedApps, toSection: .main)
         diffableDataSource.apply(snapshot, animatingDifferences: true)
     }

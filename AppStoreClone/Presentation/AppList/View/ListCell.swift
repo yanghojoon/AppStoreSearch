@@ -26,7 +26,6 @@ class ListCell: UICollectionViewCell {
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
-    
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -36,7 +35,6 @@ class ListCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
-    
     private let descriptionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -46,14 +44,12 @@ class ListCell: UICollectionViewCell {
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         return stackView
     }()
-    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.font = Design.nameLabelFont
         return label
     }()
-    
     private let genreLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -61,7 +57,6 @@ class ListCell: UICollectionViewCell {
         label.textColor = Design.genreLabelTextColor
         return label
     }()
-    
     private let ratingStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -69,12 +64,10 @@ class ListCell: UICollectionViewCell {
         stackView.distribution = .fill
         return stackView
     }()
-    
     private let starImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
-    
     private let userRatingCountLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -82,11 +75,9 @@ class ListCell: UICollectionViewCell {
         label.textColor = Design.userRatingCountLabelTextColor
         return label
     }()
-    
     private let priceButton: UIButton = {
         let button = UIButton()
         button.setTitle(Content.priceButtonTitle, for: .normal)
-        button.backgroundColor = Design.priceButtonBackgroundColor
         button.setTitleColor(Design.priceButtonTitleColor, for: .normal)
         return button
     }()
@@ -194,7 +185,6 @@ extension ListCell {
         
         static let genreLabelTextColor: UIColor = .systemGray
         static let userRatingCountLabelTextColor: UIColor = .systemGray
-        static let priceButtonBackgroundColor: UIColor = .systemGray
         static let priceButtonTitleColor: UIColor = .systemBlue
         
         static let emptyStarImage = UIImage(systemName: "star")

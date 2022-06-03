@@ -10,8 +10,8 @@ final class AppListViewModel {
     }
     
     struct Output {
-        let searchedApps: Observable<[App]>
-        let nextSearchedApps: Observable<[App]>
+        let searchedApps: Observable<[HashableApp]>
+        let nextSearchedApps: Observable<[HashableApp]>
     }
     
     // MARK: - Properties
@@ -29,18 +29,19 @@ final class AppListViewModel {
     
     private func configureSearchAppsObservable(
         with inputObserver: Observable<String>
-    ) -> Observable<[App]> {
+    ) -> Observable<[HashableApp]> {
         inputObserver
-            .flatMap { [weak self] searchText -> Observable<[App]> in
+            .flatMap { [weak self] searchText -> Observable<[HashableApp]> in
                 guard let weakSelf = self else {
                     return Observable.just([])
                 }
-                let appsObservable = weakSelf.fetchApps(from: searchText).map { searchResult -> [App] in
+                let appsObservable = weakSelf.fetchApps(from: searchText).map { searchResult -> [HashableApp] in
                     guard let lastResult = searchResult.results.last else {
                         return []
                     }
                     weakSelf.lastTerm = lastResult.trackName
-                    return searchResult.results
+                    weakSelf.searchLimit = 40
+                    return weakSelf.makeHashable(from: searchResult.results)
                 }
                 
                 return appsObservable
@@ -49,26 +50,26 @@ final class AppListViewModel {
     
     private func configureNextSearchedAppsObservable(
         with inputObserver: Observable<IndexPath>
-    ) -> Observable<[App]> {
+    ) -> Observable<[HashableApp]> {
         inputObserver
             .filter { [weak self] indexPath in
                 indexPath.row + 2 == self?.searchLimit
             }
-            .flatMap { [weak self]  indexPath -> Observable<[App]> in
+            .flatMap { [weak self]  indexPath -> Observable<[HashableApp]> in
                 guard let weakSelf = self else {
                     return Observable.just([])
                 }
-                let appsObservable = weakSelf.fetchApps(from: weakSelf.lastTerm).map { searchResult -> [App] in
+                let appsObservable = weakSelf.fetchApps(from: weakSelf.lastTerm).map { searchResult -> [HashableApp] in
                     guard let lastResult = searchResult.results.last else {
                         return []
                     }
                     weakSelf.lastTerm = lastResult.trackName
-                    weakSelf.searchLimit += 40
+                    weakSelf.searchLimit += 39
                     
                     var result = searchResult.results
                     result.removeFirst()
                     
-                    return result
+                    return weakSelf.makeHashable(from: result)
                 }
                 
                 return appsObservable
@@ -82,6 +83,16 @@ final class AppListViewModel {
             decodingType: SearchResult.self
         )
         return observable
+    }
+    
+    private func makeHashable(from apps: [App]) -> [HashableApp] {
+        var hashableApps = [HashableApp]()
+        apps.forEach { app in
+            let hashableApp = HashableApp(app: app)
+            hashableApps.append(hashableApp)
+        }
+        
+        return hashableApps
     }
     
 }

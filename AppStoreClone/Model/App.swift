@@ -17,3 +17,8 @@ struct App: Decodable, Hashable {
     let contentAdvisoryRating: String
     
 }
+
+struct HashableApp: Hashable {
+    let app: App
+    let uuid = UUID()
+}
