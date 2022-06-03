@@ -79,6 +79,11 @@ class ListCell: UICollectionViewCell {
         let button = UIButton()
         button.setTitle(Content.priceButtonTitle, for: .normal)
         button.setTitleColor(Design.priceButtonTitleColor, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
+        button.titleLabel?.backgroundColor = .systemGray6
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.layer.cornerRadius = 10
+        button.titleLabel?.clipsToBounds = true
         return button
     }()
     
@@ -135,6 +140,8 @@ class ListCell: UICollectionViewCell {
         descriptionStackView.addArrangedSubview(genreLabel)
         descriptionStackView.addArrangedSubview(ratingStackView)
         
+        guard let buttonTitle = priceButton.titleLabel else { return }
+        
         NSLayoutConstraint.activate([
             containerStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             containerStackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
@@ -142,8 +149,10 @@ class ListCell: UICollectionViewCell {
             containerStackView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor),
             priceButton.widthAnchor.constraint(equalTo: containerStackView.widthAnchor, multiplier: 0.2),
-            nameLabel.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.3),
-            genreLabel.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.5),
+            buttonTitle.widthAnchor.constraint(equalTo: containerStackView.widthAnchor, multiplier: 0.15),
+            buttonTitle.heightAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.3),
+            nameLabel.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.4),
+            genreLabel.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.4),
             ratingStackView.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.2)
         ])
     }

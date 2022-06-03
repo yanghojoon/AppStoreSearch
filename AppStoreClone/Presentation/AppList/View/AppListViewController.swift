@@ -68,21 +68,34 @@ class AppListViewController: UIViewController {
                 return nil
             }
             
+            let screenHeight = UIScreen.main.bounds.height
+            
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .fractionalHeight(1.0)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(0.15)
-            )
+            
+            var groupSize: NSCollectionLayoutSize
+            if screenHeight < 750 {
+                groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(0.15)
+                )
+            } else {
+                groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(0.11)
+                )
+            }
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
                 subitem: item,
                 count: sectionKind.columnCount
             )
+            
             let section = NSCollectionLayoutSection(group: group)
+            
             return section
         }
         
@@ -163,7 +176,7 @@ extension AppListViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] apps in
                 self?.configureSnapshot(with: apps)
-                self?.collectionView.setContentOffset(CGPoint.zero, animated: true) // 추가한 기능
+                self?.collectionView.setContentOffset(CGPoint.zero, animated: true)
             })
             .disposed(by: disposeBag)
     }
