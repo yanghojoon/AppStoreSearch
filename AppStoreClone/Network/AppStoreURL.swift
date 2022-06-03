@@ -10,7 +10,7 @@ struct SearchAppListAPI: APIProtocol {
     
     let url: URL?
     let method: HttpMethod = .get
-    private let searchLimit = 30
+    private let searchLimit = 40
     
     init(base: BaseURLProtocol = AppStoreBaseURL(), path: String = "search", term: String) {
         var urlComponents = URLComponents(string: "\(base.url)\(path)")

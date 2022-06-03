@@ -160,12 +160,10 @@ class ListCell: UICollectionViewCell {
     private func createStarRating(from rating: Double) {
         let starCount = delegate.countStar(from: rating)
         
-        if ratingStackView.subviews.count == 0 {
-            drawStar(of: starCount.fill, image: Design.starImage)
-            drawStar(of: starCount.half, image: Design.halfStarImage)
-            drawStar(of: starCount.empty, image: Design.emptyStarImage)
-            ratingStackView.addArrangedSubview(userRatingCountLabel)
-        }
+        drawStar(of: starCount.fill, image: Design.starImage)
+        drawStar(of: starCount.half, image: Design.halfStarImage)
+        drawStar(of: starCount.empty, image: Design.emptyStarImage)
+        ratingStackView.addArrangedSubview(userRatingCountLabel)
     }
     
     private func drawStar(of count: Int, image: UIImage?) {
@@ -190,8 +188,8 @@ extension ListCell {
         
         static let logoImageViewCornerRadius: CGFloat = 15
         
-        static let nameLabelFont: UIFont = .preferredFont(forTextStyle: .title3)
-        static let genreLabelFont: UIFont = .preferredFont(forTextStyle: .body)
+        static let nameLabelFont: UIFont = .preferredFont(forTextStyle: .headline)
+        static let genreLabelFont: UIFont = .preferredFont(forTextStyle: .caption1)
         static let userRatingCountLabelFont: UIFont = .preferredFont(forTextStyle: .caption1)
         
         static let genreLabelTextColor: UIColor = .systemGray

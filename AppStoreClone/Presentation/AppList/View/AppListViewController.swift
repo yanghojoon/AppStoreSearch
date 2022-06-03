@@ -25,6 +25,7 @@ class AppListViewController: UIViewController {
     private var snapshot: NSDiffableDataSourceSnapshot<SectionKind, App>!
     
     private let searchButtonDidTap = PublishSubject<String>()
+    private let collectionViewDidScroll = PublishSubject<IndexPath>()
     private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
@@ -50,6 +51,7 @@ class AppListViewController: UIViewController {
     private func configureUI() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.collectionViewLayout = createCollectionViewLayout()
+        collectionView.delegate = self
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
@@ -130,13 +132,30 @@ extension AppListViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - CollectionView Delegate
+extension AppListViewController: UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        guard let listCell = cell as? ListCell else { return }
+        collectionViewDidScroll.onNext(indexPath)
+    }
+}
+
 // MARK: - Rx Binding Methods
 extension AppListViewController {
+    
     private func bind() {
-        let input = AppListViewModel.Input(searchButtonDidTap: searchButtonDidTap.asObservable())
+        let input = AppListViewModel.Input(
+            searchButtonDidTap: searchButtonDidTap.asObservable(),
+            collectionViewDidScroll: collectionViewDidScroll.asObservable()
+        )
         let output = viewModel.transform(input)
         
         configureSearchedApps(with: output.searchedApps)
+        configureNextSearchedApps(with: output.nextSearchedApps)
     }
     
     private func configureSearchedApps(with searchedApps: Observable<[App]>) {
@@ -144,7 +163,7 @@ extension AppListViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] apps in
                 self?.configureSnapshot(with: apps)
-                self?.collectionView.setContentOffset(CGPoint.zero, animated: true)
+                self?.collectionView.setContentOffset(CGPoint.zero, animated: true) // 추가한 기능
             })
             .disposed(by: disposeBag)
     }
@@ -155,11 +174,28 @@ extension AppListViewController {
         snapshot.appendItems(apps)
         diffableDataSource.apply(snapshot)
     }
+    
+    private func configureNextSearchedApps(with nextSearchedApps: Observable<[App]>) {
+        nextSearchedApps
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] nextSearchedApps in
+                self?.applySnapshot(with: nextSearchedApps)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func applySnapshot(with nextSearchedApps: [App]) {
+        snapshot.appendItems(nextSearchedApps, toSection: .main)
+        diffableDataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
 }
 
 // MARK: - Namespaces
 extension AppListViewController {
+    
     private enum Content {
         static let searchBarPlaceHolder = "찾으시는 앱을 검색해주세요"
     }
+    
 }
