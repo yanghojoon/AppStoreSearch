@@ -22,6 +22,7 @@ class ListCell: UICollectionViewCell {
             bottom: Design.containerStackViewVerticalInset,
             trailing: Design.containerStackViewHorizontalInset
         )
+        stackView.spacing = 10
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
@@ -30,6 +31,8 @@ class ListCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Design.logoImageViewCornerRadius
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor = UIColor.systemGray6.cgColor
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -39,7 +42,8 @@ class ListCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .fill
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         return stackView
     }()
     
@@ -66,13 +70,9 @@ class ListCell: UICollectionViewCell {
         return stackView
     }()
     
-    private let starStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.setContentHuggingPriority(.required, for: .horizontal)
-        return stackView
+    private let starImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
     }()
     
     private let userRatingCountLabel: UILabel = {
@@ -112,6 +112,7 @@ class ListCell: UICollectionViewCell {
         genreLabel.text = nil
         userRatingCountLabel.text = nil
         priceButton.setTitle(nil, for: .normal)
+        ratingStackView.subviews.forEach { $0.removeFromSuperview() }
     }
     
     // MARK: - Methods
@@ -143,29 +144,38 @@ class ListCell: UICollectionViewCell {
         descriptionStackView.addArrangedSubview(genreLabel)
         descriptionStackView.addArrangedSubview(ratingStackView)
         
-        ratingStackView.addArrangedSubview(starStackView)
-        ratingStackView.addArrangedSubview(userRatingCountLabel)
-        
         NSLayoutConstraint.activate([
-            containerStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            containerStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            containerStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-            containerStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
+            containerStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            containerStackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            containerStackView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
+            containerStackView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor),
+            priceButton.widthAnchor.constraint(equalTo: containerStackView.widthAnchor, multiplier: 0.2),
+            nameLabel.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.3),
+            genreLabel.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.5),
+            ratingStackView.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.2)
         ])
     }
     
     private func createStarRating(from rating: Double) {
         let starCount = delegate.countStar(from: rating)
         
-        drawStar(of: starCount.fill, image: Design.starImage)
-        drawStar(of: starCount.half, image: Design.halfStarImage)
-        drawStar(of: starCount.empty, image: Design.emptyStarImage)
+        if ratingStackView.subviews.count == 0 {
+            drawStar(of: starCount.fill, image: Design.starImage)
+            drawStar(of: starCount.half, image: Design.halfStarImage)
+            drawStar(of: starCount.empty, image: Design.emptyStarImage)
+            ratingStackView.addArrangedSubview(userRatingCountLabel)
+        }
     }
     
     private func drawStar(of count: Int, image: UIImage?) {
         for _ in 0..<count {
             let imageView = UIImageView()
-            starStackView.addArrangedSubview(imageView)
+            
+            ratingStackView.addArrangedSubview(imageView)
+            
+            imageView.tintColor = .systemGray
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
             imageView.image = image
         }
     }
@@ -176,16 +186,16 @@ class ListCell: UICollectionViewCell {
 extension ListCell {
     private enum Design {
         static let containerStackViewHorizontalInset: CGFloat = 10
-        static let containerStackViewVerticalInset: CGFloat = 5
+        static let containerStackViewVerticalInset: CGFloat = 15
         
-        static let logoImageViewCornerRadius: CGFloat = 5
+        static let logoImageViewCornerRadius: CGFloat = 15
         
-        static let nameLabelFont: UIFont = .preferredFont(forTextStyle: .title2)
+        static let nameLabelFont: UIFont = .preferredFont(forTextStyle: .title3)
         static let genreLabelFont: UIFont = .preferredFont(forTextStyle: .body)
         static let userRatingCountLabelFont: UIFont = .preferredFont(forTextStyle: .caption1)
         
         static let genreLabelTextColor: UIColor = .systemGray
-        static let userRatingCountLabelTextColor: UIColor = .systemGray5
+        static let userRatingCountLabelTextColor: UIColor = .systemGray
         static let priceButtonBackgroundColor: UIColor = .systemGray
         static let priceButtonTitleColor: UIColor = .systemBlue
         

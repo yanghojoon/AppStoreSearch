@@ -66,16 +66,14 @@ class AppListViewController: UIViewController {
                 return nil
             }
             
-            let screenWidth = UIScreen.main.bounds.width
-            let estimatedHeight = NSCollectionLayoutDimension.estimated(screenWidth)
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: estimatedHeight
+                heightDimension: .fractionalHeight(1.0)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: estimatedHeight
+                heightDimension: .fractionalHeight(0.15)
             )
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
@@ -146,6 +144,7 @@ extension AppListViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] apps in
                 self?.configureSnapshot(with: apps)
+                self?.collectionView.setContentOffset(CGPoint.zero, animated: true)
             })
             .disposed(by: disposeBag)
     }
