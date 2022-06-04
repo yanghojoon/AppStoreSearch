@@ -19,7 +19,8 @@ class AppListViewController: UIViewController {
     
     // MARK: - Properties
     private let searchController = UISearchController()
-    private let viewModel = AppListViewModel() // TODO: 의존성 주입으로 수정
+    private var viewModel: AppListViewModel!
+    private var cellViewModel: ListCellViewModel!
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var diffableDataSource: UICollectionViewDiffableDataSource<SectionKind, HashableApp>!
     private var snapshot: NSDiffableDataSourceSnapshot<SectionKind, HashableApp>!
@@ -27,6 +28,13 @@ class AppListViewController: UIViewController {
     private let searchButtonDidTap = PublishSubject<String>()
     private let collectionViewDidScroll = PublishSubject<IndexPath>()
     private let disposeBag = DisposeBag()
+    
+    // MARK: - Initializers
+    convenience init(viewModel: AppListViewModel, cellViewModel: ListCellViewModel) {
+        self.init()
+        self.viewModel = viewModel
+        self.cellViewModel = cellViewModel
+    }
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -103,8 +111,10 @@ class AppListViewController: UIViewController {
     }
     
     private func configureCellRegistrationAndDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<ListCell, HashableApp> { cell, indexPath, hashable in
+        let cellRegistration = UICollectionView.CellRegistration<ListCell, HashableApp> { [weak self] cell, indexPath, hashable in
+            guard let weakSelf = self else { return }
             cell.apply(
+                viewModel: weakSelf.cellViewModel,
                 logoImageURL: hashable.app.artworkUrl100,
                 name: hashable.app.trackName,
                 genre: hashable.app.primaryGenreName,
@@ -152,7 +162,6 @@ extension AppListViewController: UICollectionViewDelegate {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        guard let listCell = cell as? ListCell else { return }
         collectionViewDidScroll.onNext(indexPath)
     }
 }

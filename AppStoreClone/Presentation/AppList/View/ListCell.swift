@@ -88,7 +88,7 @@ class ListCell: UICollectionViewCell {
     }()
     
     private var delegate: ListCellDelegate!
-    private var viewModel = ListCellViewModel()
+    private var viewModel: ListCellViewModel!
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -113,6 +113,7 @@ class ListCell: UICollectionViewCell {
     
     // MARK: - Methods
     func apply(
+        viewModel: ListCellViewModel,
         logoImageURL: String,
         name: String,
         genre: String,
@@ -120,6 +121,7 @@ class ListCell: UICollectionViewCell {
         userRatingCount: Int,
         formattedPrice: String
     ) {
+        setupViewModel(viewModel: viewModel)
         logoImageView.loadCachedImage(of: logoImageURL)
         nameLabel.text = name
         genreLabel.text = genre
@@ -155,6 +157,11 @@ class ListCell: UICollectionViewCell {
             genreLabel.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.4),
             ratingStackView.heightAnchor.constraint(equalTo: descriptionStackView.heightAnchor, multiplier: 0.2)
         ])
+    }
+    
+    private func setupViewModel(viewModel: ListCellViewModel) {
+        self.viewModel = viewModel
+        delegate = viewModel
     }
     
     private func createStarRating(from rating: Double) {

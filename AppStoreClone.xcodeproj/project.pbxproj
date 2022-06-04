@@ -34,6 +34,8 @@
 		DE531A6F2849C8D300383973 /* MockNetworkProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A6E2849C8D300383973 /* MockNetworkProviderTests.swift */; };
 		DE531A712849CB3A00383973 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A702849CB3A00383973 /* JSONParserTests.swift */; };
 		DE531A732849CDB500383973 /* MockSearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = DE531A722849CDB500383973 /* MockSearchResult.json */; };
+		DEA468FC284B238700746133 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA468FB284B238700746133 /* AppCoordinator.swift */; };
+		DEA468FE284B23A500746133 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA468FD284B23A500746133 /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		DE531A6E2849C8D300383973 /* MockNetworkProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkProviderTests.swift; sourceTree = "<group>"; };
 		DE531A702849CB3A00383973 /* JSONParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
 		DE531A722849CDB500383973 /* MockSearchResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockSearchResult.json; sourceTree = "<group>"; };
+		DEA468FB284B238700746133 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		DEA468FD284B23A500746133 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,7 @@
 		DE531A2D2848C7D700383973 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				DEA468FB284B238700746133 /* AppCoordinator.swift */,
 				DE531A2E2848C7F700383973 /* AppList */,
 			);
 			path = Presentation;
@@ -181,6 +186,7 @@
 				DE531A382848E6A700383973 /* URLSessionProtocol.swift */,
 				DE531A3A2848E6AD00383973 /* BaseURLProtocol.swift */,
 				DE531A3C2848E6B200383973 /* APIProtocol.swift */,
+				DEA468FD284B23A500746133 /* Coordinator.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -371,9 +377,11 @@
 				DE531A332848E5A700383973 /* NetworkProvider.swift in Sources */,
 				DE531A5128499CE500383973 /* UIImageView+Load+Cache.swift in Sources */,
 				DE531A4A28490DA500383973 /* ListCell.swift in Sources */,
+				DEA468FE284B23A500746133 /* Coordinator.swift in Sources */,
 				DE531A142848C1EC00383973 /* AppDelegate.swift in Sources */,
 				DE531A422848E8CE00383973 /* AppStoreURL.swift in Sources */,
 				DE531A162848C1EC00383973 /* SceneDelegate.swift in Sources */,
+				DEA468FC284B238700746133 /* AppCoordinator.swift in Sources */,
 				DE531A4D2849119400383973 /* SearchResult.swift in Sources */,
 				DE531A5528499ED200383973 /* Int+OmitDigit.swift in Sources */,
 				DE531A3B2848E6AD00383973 /* BaseURLProtocol.swift in Sources */,
