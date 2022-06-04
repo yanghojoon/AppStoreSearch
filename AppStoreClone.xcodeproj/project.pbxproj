@@ -38,6 +38,7 @@
 		DEA468FE284B23A500746133 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA468FD284B23A500746133 /* Coordinator.swift */; };
 		DEA46902284B2A1D00746133 /* AppListViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46901284B2A1D00746133 /* AppListViewAction.swift */; };
 		DEA46907284B2B7F00746133 /* AppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46906284B2B7F00746133 /* AppDetailViewController.swift */; };
+		DEA46909284B449400746133 /* AppDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46908284B449400746133 /* AppDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		DEA468FD284B23A500746133 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		DEA46901284B2A1D00746133 /* AppListViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListViewAction.swift; sourceTree = "<group>"; };
 		DEA46906284B2B7F00746133 /* AppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewController.swift; sourceTree = "<group>"; };
+		DEA46908284B449400746133 /* AppDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +285,7 @@
 		DEA46905284B2B5800746133 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				DEA46908284B449400746133 /* AppDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				DE531A142848C1EC00383973 /* AppDelegate.swift in Sources */,
 				DE531A422848E8CE00383973 /* AppStoreURL.swift in Sources */,
 				DE531A162848C1EC00383973 /* SceneDelegate.swift in Sources */,
+				DEA46909284B449400746133 /* AppDetailViewModel.swift in Sources */,
 				DEA468FC284B238700746133 /* FlowCoordinator.swift in Sources */,
 				DE531A4D2849119400383973 /* SearchResult.swift in Sources */,
 				DE531A5528499ED200383973 /* Int+OmitDigit.swift in Sources */,

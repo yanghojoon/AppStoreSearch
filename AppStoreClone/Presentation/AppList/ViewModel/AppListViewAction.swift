@@ -2,6 +2,6 @@ import Foundation
 
 struct AppListViewAction {
     
-    let showDetailPage: (String) -> Void
+    let showDetailPage: (App) -> Void
     
 }

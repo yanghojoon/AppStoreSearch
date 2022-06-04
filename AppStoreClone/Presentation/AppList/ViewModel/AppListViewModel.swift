@@ -7,7 +7,7 @@ final class AppListViewModel {
     struct Input {
         let searchButtonDidTap: Observable<String>
         let collectionViewDidScroll: Observable<IndexPath>
-        let cellDidSelect: Observable<String>
+        let cellDidSelect: Observable<App>
     }
     
     struct Output {
@@ -105,11 +105,11 @@ final class AppListViewModel {
         return hashableApps
     }
     
-    private func configureCellDidSelect(with inputObserver: Observable<String>) {
+    private func configureCellDidSelect(with inputObserver: Observable<App>) {
         inputObserver
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] appName in
-                self?.actions?.showDetailPage(appName)
+            .subscribe(onNext: { [weak self] app in
+                self?.actions?.showDetailPage(app)
             })
             .disposed(by: disposeBag)
     }

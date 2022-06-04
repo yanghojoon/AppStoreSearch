@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class AppListViewController: UIViewController {
+final class AppListViewController: UIViewController {
     
     // MARK: - Nested Types
     private enum SectionKind: Int {
@@ -28,7 +28,7 @@ class AppListViewController: UIViewController {
     
     private let searchButtonDidTap = PublishSubject<String>()
     private let collectionViewDidScroll = PublishSubject<IndexPath>()
-    private let selectedAppName = PublishSubject<String>()
+    private let selectedAppName = PublishSubject<App>()
     private let disposeBag = DisposeBag()
     
     // MARK: - Initializers
@@ -117,12 +117,7 @@ class AppListViewController: UIViewController {
             guard let weakSelf = self else { return }
             cell.apply(
                 viewModel: weakSelf.cellViewModel,
-                logoImageURL: hashable.app.artworkUrl100,
-                name: hashable.app.trackName,
-                genre: hashable.app.primaryGenreName,
-                averageUserRating: hashable.app.averageUserRating,
-                userRatingCount: hashable.app.userRatingCount,
-                formattedPrice: hashable.app.formattedPrice
+                app: hashable.app
             )
         }
         
@@ -173,10 +168,10 @@ extension AppListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard
             let listCell = collectionView.cellForItem(at: indexPath) as? ListCell,
-            let appName = listCell.appName else {
+            let app = listCell.app else {
             return
         }
-        selectedAppName.onNext(appName)
+        selectedAppName.onNext(app)
     }
 
 }

@@ -26,8 +26,9 @@ extension FlowCoordinator {
         rootViewController.pushViewController(appListViewController, animated: true)
     }
     
-    func showDetail(with app: String) {
-        let appDetailViewController = AppDetailViewController()
+    func showDetail(with app: App) {
+        let appDetailViewModel = AppDetailViewModel(app: app)
+        let appDetailViewController = AppDetailViewController(viewModel: appDetailViewModel)
         
         rootViewController.pushViewController(appDetailViewController, animated: true)
     }

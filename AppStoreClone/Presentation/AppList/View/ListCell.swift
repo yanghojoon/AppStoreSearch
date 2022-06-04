@@ -7,7 +7,7 @@ protocol ListCellDelegate: AnyObject {
     
 }
 
-class ListCell: UICollectionViewCell {
+final class ListCell: UICollectionViewCell {
     
     // MARK: - Properties
     private let containerStackView: UIStackView = {
@@ -26,10 +26,10 @@ class ListCell: UICollectionViewCell {
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
-    private let logoImageView: UIImageView = {
+    private let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = Design.logoImageViewCornerRadius
+        imageView.layer.cornerRadius = Design.thumbnailImageViewCornerRadius
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.systemGray6.cgColor
         imageView.clipsToBounds = true
@@ -77,17 +77,17 @@ class ListCell: UICollectionViewCell {
     }()
     private let priceButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Content.priceButtonTitle, for: .normal)
         button.setTitleColor(Design.priceButtonTitleColor, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
         button.titleLabel?.backgroundColor = .systemGray6
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.layer.cornerRadius = 10
         button.titleLabel?.clipsToBounds = true
+        button.isUserInteractionEnabled = false
         return button
     }()
     
-    private(set) var appName: String?
+    private(set) var app: App?
     private var delegate: ListCellDelegate!
     private var viewModel: ListCellViewModel!
     
@@ -115,26 +115,21 @@ class ListCell: UICollectionViewCell {
     // MARK: - Methods
     func apply(
         viewModel: ListCellViewModel,
-        logoImageURL: String,
-        name: String,
-        genre: String,
-        averageUserRating: Double,
-        userRatingCount: Int,
-        formattedPrice: String
+        app: App
     ) {
         setupViewModel(viewModel: viewModel)
-        logoImageView.loadCachedImage(of: logoImageURL)
-        nameLabel.text = name
-        genreLabel.text = genre
-        userRatingCountLabel.text = userRatingCount.omitDigit
-        priceButton.setTitle(formattedPrice, for: .normal)
-        createStarRating(from: averageUserRating)
-        self.appName = name
+        thumbnailImageView.loadCachedImage(of: app.artworkUrl100)
+        nameLabel.text = app.trackName
+        genreLabel.text = app.primaryGenreName
+        userRatingCountLabel.text = app.userRatingCount.omitDigit
+        priceButton.setTitle(app.formattedPrice, for: .normal)
+        createStarRating(from: app.averageUserRating)
+        self.app = app
     }
     
     private func configureUI() {
         addSubview(containerStackView)
-        containerStackView.addArrangedSubview(logoImageView)
+        containerStackView.addArrangedSubview(thumbnailImageView)
         containerStackView.addArrangedSubview(descriptionStackView)
         containerStackView.addArrangedSubview(priceButton)
         
@@ -149,7 +144,7 @@ class ListCell: UICollectionViewCell {
             containerStackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
             containerStackView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
             containerStackView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor),
+            thumbnailImageView.heightAnchor.constraint(equalTo: thumbnailImageView.widthAnchor),
             priceButton.widthAnchor.constraint(equalTo: containerStackView.widthAnchor, multiplier: 0.2),
             buttonTitle.widthAnchor.constraint(equalTo: containerStackView.widthAnchor, multiplier: 0.15),
             buttonTitle.heightAnchor.constraint(equalTo: containerStackView.heightAnchor, multiplier: 0.3),
@@ -193,7 +188,7 @@ extension ListCell {
         static let containerStackViewHorizontalInset: CGFloat = 10
         static let containerStackViewVerticalInset: CGFloat = 15
         
-        static let logoImageViewCornerRadius: CGFloat = 15
+        static let thumbnailImageViewCornerRadius: CGFloat = 15
         
         static let nameLabelFont: UIFont = .preferredFont(forTextStyle: .headline)
         static let genreLabelFont: UIFont = .preferredFont(forTextStyle: .caption1)
@@ -206,9 +201,5 @@ extension ListCell {
         static let emptyStarImage = UIImage(systemName: "star")
         static let starImage = UIImage(systemName: "star.fill")
         static let halfStarImage = UIImage(systemName: "star.leadinghalf.filled")
-    }
-    
-    private enum Content {
-        static let priceButtonTitle = "무료"
     }
 }

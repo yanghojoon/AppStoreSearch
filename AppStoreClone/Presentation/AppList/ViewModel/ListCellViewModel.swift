@@ -1,6 +1,6 @@
 import Foundation
 
-class ListCellViewModel { }
+final class ListCellViewModel { }
 
 extension ListCellViewModel: ListCellDelegate {
     

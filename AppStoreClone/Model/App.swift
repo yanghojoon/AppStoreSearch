@@ -12,9 +12,27 @@ struct App: Decodable, Hashable {
     let artistName: String
     let fileSizeBytes: String
     let description: String
-    let trackId: Int
     let languageCodesISO2A: [String]
     let contentAdvisoryRating: String
+    
+}
+
+extension App {
+    
+    init() {
+        self.trackName = ""
+        self.artworkUrl100 = ""
+        self.screenshotUrls = []
+        self.primaryGenreName = ""
+        self.averageUserRating = 0
+        self.userRatingCount = 0
+        self.formattedPrice = ""
+        self.artistName = ""
+        self.fileSizeBytes = ""
+        self.description = ""
+        self.languageCodesISO2A = []
+        self.contentAdvisoryRating = ""
+    }
     
 }
 
