@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
         window?.rootViewController = navigationController
         
-        coordinator = AppCoordinator(rootViewController: navigationController)
+        coordinator = FlowCoordinator(rootViewController: navigationController)
         coordinator?.start()
         
         navigationController.view.backgroundColor = .systemBackground

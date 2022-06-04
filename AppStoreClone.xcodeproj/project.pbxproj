@@ -34,8 +34,10 @@
 		DE531A6F2849C8D300383973 /* MockNetworkProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A6E2849C8D300383973 /* MockNetworkProviderTests.swift */; };
 		DE531A712849CB3A00383973 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A702849CB3A00383973 /* JSONParserTests.swift */; };
 		DE531A732849CDB500383973 /* MockSearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = DE531A722849CDB500383973 /* MockSearchResult.json */; };
-		DEA468FC284B238700746133 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA468FB284B238700746133 /* AppCoordinator.swift */; };
+		DEA468FC284B238700746133 /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA468FB284B238700746133 /* FlowCoordinator.swift */; };
 		DEA468FE284B23A500746133 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA468FD284B23A500746133 /* Coordinator.swift */; };
+		DEA46902284B2A1D00746133 /* AppListViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46901284B2A1D00746133 /* AppListViewAction.swift */; };
+		DEA46907284B2B7F00746133 /* AppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46906284B2B7F00746133 /* AppDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,8 +79,10 @@
 		DE531A6E2849C8D300383973 /* MockNetworkProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkProviderTests.swift; sourceTree = "<group>"; };
 		DE531A702849CB3A00383973 /* JSONParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
 		DE531A722849CDB500383973 /* MockSearchResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockSearchResult.json; sourceTree = "<group>"; };
-		DEA468FB284B238700746133 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		DEA468FB284B238700746133 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
 		DEA468FD284B23A500746133 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		DEA46901284B2A1D00746133 /* AppListViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListViewAction.swift; sourceTree = "<group>"; };
+		DEA46906284B2B7F00746133 /* AppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,8 +151,9 @@
 		DE531A2D2848C7D700383973 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				DEA468FB284B238700746133 /* AppCoordinator.swift */,
+				DEA468FB284B238700746133 /* FlowCoordinator.swift */,
 				DE531A2E2848C7F700383973 /* AppList */,
+				DEA46903284B2B3C00746133 /* AppDetail */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				DE531A5A2849BA9600383973 /* AppListViewModel.swift */,
+				DEA46901284B2A1D00746133 /* AppListViewAction.swift */,
 				DE531A562849A96300383973 /* ListCellViewModel.swift */,
 			);
 			path = ViewModel;
@@ -255,6 +261,30 @@
 				DE531A6A2849C80900383973 /* MockURLSession.swift */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		DEA46903284B2B3C00746133 /* AppDetail */ = {
+			isa = PBXGroup;
+			children = (
+				DEA46904284B2B5200746133 /* View */,
+				DEA46905284B2B5800746133 /* ViewModel */,
+			);
+			path = AppDetail;
+			sourceTree = "<group>";
+		};
+		DEA46904284B2B5200746133 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DEA46906284B2B7F00746133 /* AppDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DEA46905284B2B5800746133 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,8 +399,10 @@
 				DE531A3D2848E6B200383973 /* APIProtocol.swift in Sources */,
 				DE531A572849A96300383973 /* ListCellViewModel.swift in Sources */,
 				DE531A5328499CFE00383973 /* ImageCacheManager.swift in Sources */,
+				DEA46902284B2A1D00746133 /* AppListViewAction.swift in Sources */,
 				DE531A392848E6A700383973 /* URLSessionProtocol.swift in Sources */,
 				DE531A402848E7AF00383973 /* JSONParser.swift in Sources */,
+				DEA46907284B2B7F00746133 /* AppDetailViewController.swift in Sources */,
 				DE531A5B2849BA9600383973 /* AppListViewModel.swift in Sources */,
 				DE531A182848C1EC00383973 /* AppListViewController.swift in Sources */,
 				DE531A372848E68B00383973 /* URLRequest+Initializer.swift in Sources */,
@@ -381,7 +413,7 @@
 				DE531A142848C1EC00383973 /* AppDelegate.swift in Sources */,
 				DE531A422848E8CE00383973 /* AppStoreURL.swift in Sources */,
 				DE531A162848C1EC00383973 /* SceneDelegate.swift in Sources */,
-				DEA468FC284B238700746133 /* AppCoordinator.swift in Sources */,
+				DEA468FC284B238700746133 /* FlowCoordinator.swift in Sources */,
 				DE531A4D2849119400383973 /* SearchResult.swift in Sources */,
 				DE531A5528499ED200383973 /* Int+OmitDigit.swift in Sources */,
 				DE531A3B2848E6AD00383973 /* BaseURLProtocol.swift in Sources */,

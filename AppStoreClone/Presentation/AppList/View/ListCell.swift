@@ -87,6 +87,7 @@ class ListCell: UICollectionViewCell {
         return button
     }()
     
+    private(set) var appName: String?
     private var delegate: ListCellDelegate!
     private var viewModel: ListCellViewModel!
     
@@ -128,11 +129,10 @@ class ListCell: UICollectionViewCell {
         userRatingCountLabel.text = userRatingCount.omitDigit
         priceButton.setTitle(formattedPrice, for: .normal)
         createStarRating(from: averageUserRating)
+        self.appName = name
     }
     
     private func configureUI() {
-        delegate = viewModel
-        
         addSubview(containerStackView)
         containerStackView.addArrangedSubview(logoImageView)
         containerStackView.addArrangedSubview(descriptionStackView)

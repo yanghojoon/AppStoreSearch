@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 
 class AppListViewController: UIViewController {
     
@@ -27,6 +28,7 @@ class AppListViewController: UIViewController {
     
     private let searchButtonDidTap = PublishSubject<String>()
     private let collectionViewDidScroll = PublishSubject<IndexPath>()
+    private let selectedAppName = PublishSubject<String>()
     private let disposeBag = DisposeBag()
     
     // MARK: - Initializers
@@ -146,6 +148,7 @@ class AppListViewController: UIViewController {
 
 // MARK: - SearchBar Delegate
 extension AppListViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else {
             return
@@ -153,10 +156,12 @@ extension AppListViewController: UISearchBarDelegate {
         
         searchButtonDidTap.onNext(searchText)
     }
+    
 }
 
 // MARK: - CollectionView Delegate
 extension AppListViewController: UICollectionViewDelegate {
+    
     func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,
@@ -164,6 +169,16 @@ extension AppListViewController: UICollectionViewDelegate {
     ) {
         collectionViewDidScroll.onNext(indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard
+            let listCell = collectionView.cellForItem(at: indexPath) as? ListCell,
+            let appName = listCell.appName else {
+            return
+        }
+        selectedAppName.onNext(appName)
+    }
+
 }
 
 // MARK: - Rx Binding Methods
@@ -172,7 +187,8 @@ extension AppListViewController {
     private func bind() {
         let input = AppListViewModel.Input(
             searchButtonDidTap: searchButtonDidTap.asObservable(),
-            collectionViewDidScroll: collectionViewDidScroll.asObservable()
+            collectionViewDidScroll: collectionViewDidScroll.asObservable(),
+            cellDidSelect: selectedAppName.asObservable()
         )
         let output = viewModel.transform(input)
         

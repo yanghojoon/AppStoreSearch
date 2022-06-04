@@ -1,9 +1,8 @@
 import Foundation
 import UIKit
 
-class AppCoordinator: Coordinator {
+class FlowCoordinator: Coordinator {
     
-    var childCoordinators: [Coordinator] = []
     private let rootViewController: UINavigationController
     
     init(rootViewController: UINavigationController) {
@@ -16,14 +15,21 @@ class AppCoordinator: Coordinator {
     
 }
 
-extension AppCoordinator {
+extension FlowCoordinator {
     
     func showSearchBar() {
-        let appListViewModel = AppListViewModel()
+        let actions = AppListViewAction(showDetailPage: showDetail(with:))
+        let appListViewModel = AppListViewModel(actions: actions)
         let listCellViewModel = ListCellViewModel()
         let appListViewController = AppListViewController(viewModel: appListViewModel, cellViewModel: listCellViewModel)
         
         rootViewController.pushViewController(appListViewController, animated: true)
+    }
+    
+    func showDetail(with app: String) {
+        let appDetailViewController = AppDetailViewController()
+        
+        rootViewController.pushViewController(appDetailViewController, animated: true)
     }
     
 }
