@@ -39,6 +39,7 @@
 		DEA46902284B2A1D00746133 /* AppListViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46901284B2A1D00746133 /* AppListViewAction.swift */; };
 		DEA46907284B2B7F00746133 /* AppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46906284B2B7F00746133 /* AppDetailViewController.swift */; };
 		DEA46909284B449400746133 /* AppDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46908284B449400746133 /* AppDetailViewModel.swift */; };
+		DEA4690D284B9AD800746133 /* TitleStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA4690C284B9AD800746133 /* TitleStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		DEA46901284B2A1D00746133 /* AppListViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListViewAction.swift; sourceTree = "<group>"; };
 		DEA46906284B2B7F00746133 /* AppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewController.swift; sourceTree = "<group>"; };
 		DEA46908284B449400746133 /* AppDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewModel.swift; sourceTree = "<group>"; };
+		DEA4690C284B9AD800746133 /* TitleStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				DEA46906284B2B7F00746133 /* AppDetailViewController.swift */,
+				DEA4690C284B9AD800746133 /* TitleStackView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				DEA46907284B2B7F00746133 /* AppDetailViewController.swift in Sources */,
 				DE531A5B2849BA9600383973 /* AppListViewModel.swift in Sources */,
 				DE531A182848C1EC00383973 /* AppListViewController.swift in Sources */,
+				DEA4690D284B9AD800746133 /* TitleStackView.swift in Sources */,
 				DE531A372848E68B00383973 /* URLRequest+Initializer.swift in Sources */,
 				DE531A332848E5A700383973 /* NetworkProvider.swift in Sources */,
 				DE531A5128499CE500383973 /* UIImageView+Load+Cache.swift in Sources */,
