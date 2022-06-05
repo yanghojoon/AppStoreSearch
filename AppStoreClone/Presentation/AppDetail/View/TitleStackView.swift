@@ -1,6 +1,6 @@
 import UIKit
 
-class TitleStackView: UIStackView {
+final class TitleStackView: UIStackView {
     
     // MARK: - Properties
     private let thumbnailImageView: UIImageView = {
@@ -74,7 +74,7 @@ class TitleStackView: UIStackView {
     }
     
     // MARK: - Methods
-    func setup(thumnail: String, name: String, producer: String, price: String) {
+    func apply(thumnail: String, name: String, producer: String, price: String) {
         thumbnailImageView.loadCachedImage(of: thumnail)
         nameLabel.text = name
         producerLabel.text = producer

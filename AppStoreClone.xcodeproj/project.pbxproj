@@ -40,6 +40,8 @@
 		DEA46907284B2B7F00746133 /* AppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46906284B2B7F00746133 /* AppDetailViewController.swift */; };
 		DEA46909284B449400746133 /* AppDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46908284B449400746133 /* AppDetailViewModel.swift */; };
 		DEA4690D284B9AD800746133 /* TitleStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA4690C284B9AD800746133 /* TitleStackView.swift */; };
+		DEA46913284BADA000746133 /* UICollectionView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46912284BADA000746133 /* UICollectionView+Register.swift */; };
+		DEA46915284C298200746133 /* SummaryScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46914284C298200746133 /* SummaryScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +89,8 @@
 		DEA46906284B2B7F00746133 /* AppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewController.swift; sourceTree = "<group>"; };
 		DEA46908284B449400746133 /* AppDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewModel.swift; sourceTree = "<group>"; };
 		DEA4690C284B9AD800746133 /* TitleStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleStackView.swift; sourceTree = "<group>"; };
+		DEA46912284BADA000746133 /* UICollectionView+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Register.swift"; sourceTree = "<group>"; };
+		DEA46914284C298200746133 /* SummaryScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,7 @@
 				DE531A362848E68B00383973 /* URLRequest+Initializer.swift */,
 				DE531A5028499CE500383973 /* UIImageView+Load+Cache.swift */,
 				DE531A5428499ED200383973 /* Int+OmitDigit.swift */,
+				DEA46912284BADA000746133 /* UICollectionView+Register.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 			children = (
 				DEA46906284B2B7F00746133 /* AppDetailViewController.swift */,
 				DEA4690C284B9AD800746133 /* TitleStackView.swift */,
+				DEA46914284C298200746133 /* SummaryScrollView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -401,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEA46915284C298200746133 /* SummaryScrollView.swift in Sources */,
 				DE531A4F2849121A00383973 /* App.swift in Sources */,
 				DE531A3D2848E6B200383973 /* APIProtocol.swift in Sources */,
 				DE531A572849A96300383973 /* ListCellViewModel.swift in Sources */,
@@ -423,6 +430,7 @@
 				DEA46909284B449400746133 /* AppDetailViewModel.swift in Sources */,
 				DEA468FC284B238700746133 /* FlowCoordinator.swift in Sources */,
 				DE531A4D2849119400383973 /* SearchResult.swift in Sources */,
+				DEA46913284BADA000746133 /* UICollectionView+Register.swift in Sources */,
 				DE531A5528499ED200383973 /* Int+OmitDigit.swift in Sources */,
 				DE531A3B2848E6AD00383973 /* BaseURLProtocol.swift in Sources */,
 			);

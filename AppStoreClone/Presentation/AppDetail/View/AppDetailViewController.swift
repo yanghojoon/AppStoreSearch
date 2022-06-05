@@ -3,6 +3,13 @@ import RxSwift
 
 final class AppDetailViewController: UIViewController {
     
+    // MARK: - Nested Types
+    private enum ScreenshotSectionKind: Int {
+        
+        case main
+        
+    }
+    
     // MARK: - Properties
     private let containerScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -27,8 +34,8 @@ final class AppDetailViewController: UIViewController {
     }()
     
     private let titleStackView = TitleStackView(frame: .zero)
+    private let summaryScrollView = SummaryScrollView(frame: .zero)
     private var viewModel: AppDetailViewModel!
-    private let viewDidLoadDidInvoke = PublishSubject<Void>()
     private let disposeBag = DisposeBag()
     
     convenience init(viewModel: AppDetailViewModel) {
@@ -41,7 +48,6 @@ final class AppDetailViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         bind()
-        viewDidLoadDidInvoke.onNext(())
     }
     
     // MARK: - Methods
@@ -49,6 +55,7 @@ final class AppDetailViewController: UIViewController {
         view.addSubview(containerScrollView)
         containerScrollView.addSubview(containerStackView)
         containerStackView.addArrangedSubview(titleStackView)
+        containerStackView.addArrangedSubview(summaryScrollView)
         
         NSLayoutConstraint.activate([
             containerScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -59,8 +66,31 @@ final class AppDetailViewController: UIViewController {
             containerStackView.topAnchor.constraint(equalTo: containerScrollView.topAnchor),
             containerStackView.leadingAnchor.constraint(equalTo: containerScrollView.leadingAnchor),
             containerStackView.trailingAnchor.constraint(equalTo: containerScrollView.trailingAnchor),
-            containerStackView.bottomAnchor.constraint(equalTo: containerScrollView.bottomAnchor)
+            containerStackView.bottomAnchor.constraint(equalTo: containerScrollView.bottomAnchor),
         ])
+    }
+    
+    private func createCollectionViewLayout(itemHeight: CGFloat, gruopHeight: CGFloat) -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(itemHeight)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(gruopHeight)
+            )
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
+            
+            return section
+        }
+        
+        return layout
     }
     
 }
@@ -69,22 +99,22 @@ final class AppDetailViewController: UIViewController {
 extension AppDetailViewController {
     
     private func bind() {
-        let input = AppDetailViewModel.Input(viewDidLoadDidInvoke: viewDidLoadDidInvoke.asObservable())
-        let output = viewModel.transform(input)
+        let output = viewModel.transform()
         
-        configureAppItems(with: output.appItems)
+        configureAppItems(with: output.titleItems)
     }
     
     private func configureAppItems(with appItems: Observable<App>) {
         appItems
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] app in
-                self?.titleStackView.setup(
+                self?.titleStackView.apply(
                     thumnail: app.artworkUrl100,
                     name: app.trackName,
                     producer: app.artistName,
                     price: app.formattedPrice
                 )
+                self?.summaryScrollView.apply(with: app)
             })
             .disposed(by: disposeBag)
     }

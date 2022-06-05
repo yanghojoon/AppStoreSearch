@@ -109,7 +109,8 @@ final class ListCell: UICollectionViewCell {
         genreLabel.text = nil
         userRatingCountLabel.text = nil
         priceButton.setTitle(nil, for: .normal)
-        ratingStackView.subviews.forEach { $0.removeFromSuperview() }
+        ratingStackView.subviews.forEach { $0.removeFromSuperview()
+        }
     }
     
     // MARK: - Methods
