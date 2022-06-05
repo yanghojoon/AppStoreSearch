@@ -28,9 +28,36 @@ final class AppDetailViewController: UIViewController {
             bottom: Design.containerStackViewVerticalInset,
             trailing: Design.containerStackViewHorizontalInset
         )
-        stackView.spacing = 10
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
+    }()
+    private let separatorView: UIView = {
+        let view = UIView()
+        view.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        view.widthAnchor.constraint(
+            equalToConstant: UIScreen.main.bounds.width - Design.containerStackViewHorizontalInset * 2
+        ).isActive = true
+        view.setContentHuggingPriority(.required, for: .vertical)
+        view.backgroundColor = .systemGray4
+        return view
+    }()
+    private let descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.font = Design.descriptionTextViewFont
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.textAlignment = .left
+        textView.dataDetectorTypes = .all
+        textView.textContainer.maximumNumberOfLines = 2
+        return textView
+    }()
+    private let moreButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("더보기", for: .normal)
+        button.contentHorizontalAlignment = .trailing
+        button.setTitleColor(UIColor.systemBlue, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+        return button
     }()
     
     private let titleStackView = TitleStackView(frame: .zero)
@@ -56,6 +83,9 @@ final class AppDetailViewController: UIViewController {
         containerScrollView.addSubview(containerStackView)
         containerStackView.addArrangedSubview(titleStackView)
         containerStackView.addArrangedSubview(summaryScrollView)
+        containerStackView.addArrangedSubview(separatorView)
+        containerStackView.addArrangedSubview(descriptionTextView)
+        containerStackView.addArrangedSubview(moreButton)
         
         NSLayoutConstraint.activate([
             containerScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -99,9 +129,12 @@ final class AppDetailViewController: UIViewController {
 extension AppDetailViewController {
     
     private func bind() {
-        let output = viewModel.transform()
+        let input = AppDetailViewModel.Input(moreButtonDidTap: moreButton.rx.tap.asObservable())
+        
+        let output = viewModel.transform(input)
         
         configureAppItems(with: output.titleItems)
+        configureShowMoreContent(with: output.showMoreContent)
     }
     
     private func configureAppItems(with appItems: Observable<App>) {
@@ -115,6 +148,18 @@ extension AppDetailViewController {
                     price: app.formattedPrice
                 )
                 self?.summaryScrollView.apply(with: app)
+                self?.descriptionTextView.text = app.description
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureShowMoreContent(with showMoreContent: Observable<Void>) {
+        showMoreContent
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.moreButton.isHidden = true
+                self?.descriptionTextView.textContainer.maximumNumberOfLines = 0
+                self?.descriptionTextView.invalidateIntrinsicContentSize()
             })
             .disposed(by: disposeBag)
     }
@@ -128,6 +173,8 @@ extension AppDetailViewController {
         
         static let containerStackViewHorizontalInset: CGFloat = 15
         static let containerStackViewVerticalInset: CGFloat = 15
+        
+        static let descriptionTextViewFont: UIFont = .preferredFont(forTextStyle: .body)
 
     }
     

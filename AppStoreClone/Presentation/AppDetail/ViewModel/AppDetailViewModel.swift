@@ -3,9 +3,16 @@ import RxSwift
 
 final class AppDetailViewModel {
     
+    struct Input {
+        
+        let moreButtonDidTap: Observable<Void>
+        
+    }
+    
     struct Output {
         
         let titleItems: Observable<App>
+        let showMoreContent: Observable<Void>
         
     }
     
@@ -15,10 +22,10 @@ final class AppDetailViewModel {
         self.app = app
     }
     
-    func transform() -> Output {
+    func transform(_ input: Input) -> Output {
         let appItems = configureAppItemsObservable()
         
-        let ouput = Output(titleItems: appItems)
+        let ouput = Output(titleItems: appItems, showMoreContent: input.moreButtonDidTap)
         
         return ouput
     }
