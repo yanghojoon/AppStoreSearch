@@ -113,8 +113,8 @@ final class TitleStackView: UIStackView {
             buttonTitle.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.15),
             buttonTitle.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2),
             nameLabel.heightAnchor.constraint(equalTo: titleDescriptionStackView.heightAnchor, multiplier: 0.5),
-            producerLabel.heightAnchor.constraint(equalTo: titleDescriptionStackView.heightAnchor, multiplier: 0.1),
-            titleButtonStackView.heightAnchor.constraint(equalTo: titleDescriptionStackView.heightAnchor, multiplier: 0.4)
+            producerLabel.heightAnchor.constraint(equalTo: titleDescriptionStackView.heightAnchor, multiplier: 0.2),
+            titleButtonStackView.heightAnchor.constraint(equalTo: titleDescriptionStackView.heightAnchor, multiplier: 0.3)
         ])
     }
     
