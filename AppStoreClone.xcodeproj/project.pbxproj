@@ -43,6 +43,7 @@
 		DEA46913284BADA000746133 /* UICollectionView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46912284BADA000746133 /* UICollectionView+Register.swift */; };
 		DEA46915284C298200746133 /* SummaryScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46914284C298200746133 /* SummaryScrollView.swift */; };
 		DEA46917284C4FAB00746133 /* ScreenshotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA46916284C4FAB00746133 /* ScreenshotCell.swift */; };
+		DEA4691B284DA05600746133 /* ShareAppActivityItemSouce.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA4691A284DA05600746133 /* ShareAppActivityItemSouce.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		DEA46912284BADA000746133 /* UICollectionView+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Register.swift"; sourceTree = "<group>"; };
 		DEA46914284C298200746133 /* SummaryScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryScrollView.swift; sourceTree = "<group>"; };
 		DEA46916284C4FAB00746133 /* ScreenshotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotCell.swift; sourceTree = "<group>"; };
+		DEA4691A284DA05600746133 /* ShareAppActivityItemSouce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAppActivityItemSouce.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +292,7 @@
 				DEA4690C284B9AD800746133 /* TitleStackView.swift */,
 				DEA46914284C298200746133 /* SummaryScrollView.swift */,
 				DEA46916284C4FAB00746133 /* ScreenshotCell.swift */,
+				DEA4691A284DA05600746133 /* ShareAppActivityItemSouce.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 				DE531A422848E8CE00383973 /* AppStoreURL.swift in Sources */,
 				DE531A162848C1EC00383973 /* SceneDelegate.swift in Sources */,
 				DEA46917284C4FAB00746133 /* ScreenshotCell.swift in Sources */,
+				DEA4691B284DA05600746133 /* ShareAppActivityItemSouce.swift in Sources */,
 				DEA46909284B449400746133 /* AppDetailViewModel.swift in Sources */,
 				DEA468FC284B238700746133 /* FlowCoordinator.swift in Sources */,
 				DE531A4D2849119400383973 /* SearchResult.swift in Sources */,

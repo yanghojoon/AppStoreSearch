@@ -1,5 +1,12 @@
 import UIKit
 
+// MARK: - Delegate Protocol
+protocol TitleStackViewDelegate: AnyObject {
+    
+    func shareButtonDidTap()
+    
+}
+
 final class TitleStackView: UIStackView {
     
     // MARK: - Properties
@@ -62,6 +69,8 @@ final class TitleStackView: UIStackView {
         return button
     }()
     
+    weak var delegate: TitleStackViewDelegate?
+    
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -82,6 +91,8 @@ final class TitleStackView: UIStackView {
     }
     
     private func configureUI() {
+        shareButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareButtonDidTap)))
+        
         axis = .horizontal
         alignment = .fill
         distribution = .fill
@@ -106,6 +117,11 @@ final class TitleStackView: UIStackView {
             producerLabel.heightAnchor.constraint(equalTo: titleDescriptionStackView.heightAnchor, multiplier: 0.1),
             titleButtonStackView.heightAnchor.constraint(equalTo: titleDescriptionStackView.heightAnchor, multiplier: 0.4)
         ])
+    }
+    
+    @objc
+    private func shareButtonDidTap() {
+        delegate?.shareButtonDidTap()
     }
     
 }

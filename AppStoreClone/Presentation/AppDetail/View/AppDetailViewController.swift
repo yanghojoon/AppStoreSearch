@@ -70,6 +70,7 @@ final class AppDetailViewController: UIViewController {
     )
     private var diffableDataSource: UICollectionViewDiffableDataSource<ScreenshotSectionKind, String>!
     private var snapshot: NSDiffableDataSourceSnapshot<ScreenshotSectionKind, String>!
+    private let shareButtonDidtap = PublishSubject<Void>()
     private var viewModel: AppDetailViewModel!
     private let disposeBag = DisposeBag()
     
@@ -88,6 +89,8 @@ final class AppDetailViewController: UIViewController {
     
     // MARK: - Methods
     private func configureUI() {
+        titleStackView.delegate = self
+        
         view.addSubview(containerScrollView)
         containerScrollView.addSubview(containerStackView)
         containerStackView.addArrangedSubview(titleStackView)
@@ -148,12 +151,16 @@ final class AppDetailViewController: UIViewController {
 extension AppDetailViewController {
     
     private func bind() {
-        let input = AppDetailViewModel.Input(moreButtonDidTap: moreButton.rx.tap.asObservable())
+        let input = AppDetailViewModel.Input(
+            moreButtonDidTap: moreButton.rx.tap.asObservable(),
+            sharebuttonDidTap: shareButtonDidtap.asObservable()
+        )
         
         let output = viewModel.transform(input)
         
         configureAppItems(with: output.items)
         configureShowMoreContent(with: output.showMoreContent)
+        configureShowActivityViewController(with: output.showActivityViewController)
     }
     
     private func configureAppItems(with appItems: Observable<App>) {
@@ -200,6 +207,27 @@ extension AppDetailViewController {
                 self?.descriptionTextView.invalidateIntrinsicContentSize()
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func configureShowActivityViewController(with trackViewURL: Observable<String>) {
+        trackViewURL
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] url in
+                let items = [ShareAppActivityItemSouce(content: url)]
+                
+                let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+                self?.present(activityViewController, animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+}
+
+// MARK: - TitleStackView Delegate
+extension AppDetailViewController: TitleStackViewDelegate {
+    
+    func shareButtonDidTap() {
+        shareButtonDidtap.onNext(())
     }
     
 }

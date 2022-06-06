@@ -14,6 +14,7 @@ struct App: Decodable, Hashable {
     let description: String
     let languageCodesISO2A: [String]
     let contentAdvisoryRating: String
+    let trackViewUrl: String
     
 }
 
@@ -32,6 +33,7 @@ extension App {
         self.description = ""
         self.languageCodesISO2A = []
         self.contentAdvisoryRating = ""
+        self.trackViewUrl = ""
     }
     
 }
