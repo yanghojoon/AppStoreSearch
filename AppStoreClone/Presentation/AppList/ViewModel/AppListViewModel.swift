@@ -7,6 +7,7 @@ final class AppListViewModel {
     struct Input {
         let searchButtonDidTap: Observable<String>
         let collectionViewDidScroll: Observable<IndexPath>
+        let cellDidSelect: Observable<App>
     }
     
     struct Output {
@@ -15,13 +16,22 @@ final class AppListViewModel {
     }
     
     // MARK: - Properties
+    private let actions: AppListViewAction?
+    private let disposeBag = DisposeBag()
     private var lastTerm: String!
     private var searchLimit = 40
+    
+    // MARK: - Initializers
+    init(actions: AppListViewAction) {
+        self.actions = actions
+    }
     
     // MARK: - Methods
     func transform(_ input: Input) -> Output {
         let searchedApps = configureSearchAppsObservable(with: input.searchButtonDidTap)
         let nextSearchedApps = configureNextSearchedAppsObservable(with: input.collectionViewDidScroll)
+        configureCellDidSelect(with: input.cellDidSelect)
+        
         let ouput = Output(searchedApps: searchedApps, nextSearchedApps: nextSearchedApps)
         
         return ouput
@@ -93,6 +103,15 @@ final class AppListViewModel {
         }
         
         return hashableApps
+    }
+    
+    private func configureCellDidSelect(with inputObserver: Observable<App>) {
+        inputObserver
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] app in
+                self?.actions?.showDetailPage(app)
+            })
+            .disposed(by: disposeBag)
     }
     
 }

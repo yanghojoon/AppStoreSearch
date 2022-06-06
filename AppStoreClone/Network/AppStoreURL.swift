@@ -10,9 +10,8 @@ struct SearchAppListAPI: APIProtocol {
     
     let url: URL?
     let method: HttpMethod = .get
-    private let searchLimit = 40
     
-    init(base: BaseURLProtocol = AppStoreBaseURL(), path: String = "search", term: String) {
+    init(base: BaseURLProtocol = AppStoreBaseURL(), path: String = "search", searchLimit: Int = 40, term: String) {
         var urlComponents = URLComponents(string: "\(base.url)\(path)")
         let queryItems = [
             URLQueryItem(name: "country", value: "kr"),

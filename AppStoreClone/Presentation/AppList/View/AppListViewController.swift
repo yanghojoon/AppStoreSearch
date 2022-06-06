@@ -1,7 +1,7 @@
-import UIKit
 import RxSwift
+import UIKit
 
-class AppListViewController: UIViewController {
+final class AppListViewController: UIViewController {
     
     // MARK: - Nested Types
     private enum SectionKind: Int {
@@ -19,14 +19,24 @@ class AppListViewController: UIViewController {
     
     // MARK: - Properties
     private let searchController = UISearchController()
-    private let viewModel = AppListViewModel() // TODO: 의존성 주입으로 수정
+    private let loadingActivityIndicator = UIActivityIndicatorView()
+    private var viewModel: AppListViewModel!
+    private var cellViewModel: ListCellViewModel!
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var diffableDataSource: UICollectionViewDiffableDataSource<SectionKind, HashableApp>!
     private var snapshot: NSDiffableDataSourceSnapshot<SectionKind, HashableApp>!
     
     private let searchButtonDidTap = PublishSubject<String>()
     private let collectionViewDidScroll = PublishSubject<IndexPath>()
+    private let selectedAppName = PublishSubject<App>()
     private let disposeBag = DisposeBag()
+    
+    // MARK: - Initializers
+    convenience init(viewModel: AppListViewModel, cellViewModel: ListCellViewModel) {
+        self.init()
+        self.viewModel = viewModel
+        self.cellViewModel = cellViewModel
+    }
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -49,12 +59,16 @@ class AppListViewController: UIViewController {
     }
     
     private func configureUI() {
+        loadingActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.collectionViewLayout = createCollectionViewLayout()
         collectionView.delegate = self
         view.addSubview(collectionView)
+        view.addSubview(loadingActivityIndicator)
         
         NSLayoutConstraint.activate([
+            loadingActivityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingActivityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -103,14 +117,11 @@ class AppListViewController: UIViewController {
     }
     
     private func configureCellRegistrationAndDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<ListCell, HashableApp> { cell, indexPath, hashable in
+        let cellRegistration = UICollectionView.CellRegistration<ListCell, HashableApp> { [weak self] cell, indexPath, hashable in
+            guard let weakSelf = self else { return }
             cell.apply(
-                logoImageURL: hashable.app.artworkUrl100,
-                name: hashable.app.trackName,
-                genre: hashable.app.primaryGenreName,
-                averageUserRating: hashable.app.averageUserRating,
-                userRatingCount: hashable.app.userRatingCount,
-                formattedPrice: hashable.app.formattedPrice
+                viewModel: weakSelf.cellViewModel,
+                app: hashable.app
             )
         }
         
@@ -136,25 +147,38 @@ class AppListViewController: UIViewController {
 
 // MARK: - SearchBar Delegate
 extension AppListViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else {
             return
         }
         
+        loadingActivityIndicator.startAnimating()
         searchButtonDidTap.onNext(searchText)
     }
+    
 }
 
 // MARK: - CollectionView Delegate
 extension AppListViewController: UICollectionViewDelegate {
+    
     func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        guard let listCell = cell as? ListCell else { return }
         collectionViewDidScroll.onNext(indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard
+            let listCell = collectionView.cellForItem(at: indexPath) as? ListCell,
+            let app = listCell.app else {
+            return
+        }
+        selectedAppName.onNext(app)
+    }
+
 }
 
 // MARK: - Rx Binding Methods
@@ -163,7 +187,8 @@ extension AppListViewController {
     private func bind() {
         let input = AppListViewModel.Input(
             searchButtonDidTap: searchButtonDidTap.asObservable(),
-            collectionViewDidScroll: collectionViewDidScroll.asObservable()
+            collectionViewDidScroll: collectionViewDidScroll.asObservable(),
+            cellDidSelect: selectedAppName.asObservable()
         )
         let output = viewModel.transform(input)
         
@@ -175,6 +200,7 @@ extension AppListViewController {
         searchedApps
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] apps in
+                self?.loadingActivityIndicator.stopAnimating()
                 self?.configureSnapshot(with: apps)
                 self?.collectionView.setContentOffset(CGPoint.zero, animated: true)
             })
