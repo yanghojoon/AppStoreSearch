@@ -19,6 +19,7 @@ final class AppListViewController: UIViewController {
     
     // MARK: - Properties
     private let searchController = UISearchController()
+    private let loadingActivityIndicator = UIActivityIndicatorView()
     private var viewModel: AppListViewModel!
     private var cellViewModel: ListCellViewModel!
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -58,12 +59,16 @@ final class AppListViewController: UIViewController {
     }
     
     private func configureUI() {
+        loadingActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.collectionViewLayout = createCollectionViewLayout()
         collectionView.delegate = self
         view.addSubview(collectionView)
+        view.addSubview(loadingActivityIndicator)
         
         NSLayoutConstraint.activate([
+            loadingActivityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingActivityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -148,6 +153,7 @@ extension AppListViewController: UISearchBarDelegate {
             return
         }
         
+        loadingActivityIndicator.startAnimating()
         searchButtonDidTap.onNext(searchText)
     }
     
@@ -194,6 +200,7 @@ extension AppListViewController {
         searchedApps
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] apps in
+                self?.loadingActivityIndicator.stopAnimating()
                 self?.configureSnapshot(with: apps)
                 self?.collectionView.setContentOffset(CGPoint.zero, animated: true)
             })
