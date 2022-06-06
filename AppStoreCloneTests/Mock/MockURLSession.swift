@@ -2,6 +2,7 @@ import Foundation
 @testable import AppStoreClone
 
 class MockURLSessionDataTask: URLSessionDataTask {
+    
     var resumeDidCall: () -> Void = {}
     
     override func resume() {
@@ -9,9 +10,11 @@ class MockURLSessionDataTask: URLSessionDataTask {
     }
     
     override func cancel() {}
+    
 }
 
 class MockURLSession: URLSessionProtocol {
+    
     var isRequestSuccess: Bool
     var sessionDataTask: MockURLSessionDataTask?
     
@@ -53,4 +56,5 @@ class MockURLSession: URLSessionProtocol {
         
         return sessionDataTask
     }
+    
 }

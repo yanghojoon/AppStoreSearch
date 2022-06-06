@@ -7,9 +7,9 @@ class ScreenshotCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 10
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.systemGray6.cgColor
+        imageView.layer.cornerRadius = Design.screenshotImageViewCornerRadius
+        imageView.layer.borderWidth = Design.screenshotImageViewBorderWidth
+        imageView.layer.borderColor = Design.screenshotImageViewBorderColor
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -47,6 +47,19 @@ class ScreenshotCell: UICollectionViewCell {
             screenshotImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             screenshotImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
+    }
+    
+}
+
+// MARK: - Namespaces
+extension ScreenshotCell {
+    
+    private enum Design {
+        
+        static let screenshotImageViewCornerRadius: CGFloat = 10
+        static let screenshotImageViewBorderWidth: CGFloat = 1
+        static let screenshotImageViewBorderColor = UIColor.systemGray6.cgColor
+        
     }
     
 }

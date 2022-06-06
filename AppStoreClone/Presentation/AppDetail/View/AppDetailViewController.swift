@@ -1,6 +1,6 @@
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 final class AppDetailViewController: UIViewController {
     
@@ -30,7 +30,7 @@ final class AppDetailViewController: UIViewController {
             trailing: Design.containerStackViewHorizontalInset
         )
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.spacing = 5
+        stackView.spacing = Design.containerStackViewSpacing
         return stackView
     }()
     private let separatorView: UIView = {
@@ -40,7 +40,7 @@ final class AppDetailViewController: UIViewController {
             equalToConstant: UIScreen.main.bounds.width - Design.containerStackViewHorizontalInset * 2
         ).isActive = true
         view.setContentHuggingPriority(.required, for: .vertical)
-        view.backgroundColor = .systemGray4
+        view.backgroundColor = Design.separatorViewBackgroundColor
         return view
     }()
     private let descriptionTextView: UITextView = {
@@ -55,10 +55,10 @@ final class AppDetailViewController: UIViewController {
     }()
     private let moreButton: UIButton = {
         let button = UIButton()
-        button.setTitle("더보기", for: .normal)
+        button.setTitle(Content.moreButtonTitle, for: .normal)
         button.contentHorizontalAlignment = .trailing
-        button.setTitleColor(UIColor.systemBlue, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+        button.setTitleColor(Design.moreButtonTitleColor, for: .normal)
+        button.titleLabel?.font = Design.moreButtonTitleFont
         return button
     }()
     
@@ -68,8 +68,10 @@ final class AppDetailViewController: UIViewController {
         frame: .zero,
         collectionViewLayout: UICollectionViewLayout()
     )
+    
     private var diffableDataSource: UICollectionViewDiffableDataSource<ScreenshotSectionKind, String>!
     private var snapshot: NSDiffableDataSourceSnapshot<ScreenshotSectionKind, String>!
+    
     private let shareButtonDidtap = PublishSubject<Void>()
     private var viewModel: AppDetailViewModel!
     private let disposeBag = DisposeBag()
@@ -240,8 +242,20 @@ extension AppDetailViewController {
         static let containerStackViewHorizontalInset: CGFloat = 15
         static let containerStackViewVerticalInset: CGFloat = 15
         
+        static let containerStackViewSpacing: CGFloat = 5
+        
+        static let separatorViewBackgroundColor: UIColor = .systemGray4
+        static let moreButtonTitleColor: UIColor = .systemBlue
+        
+        static let moreButtonTitleFont: UIFont = .preferredFont(forTextStyle: .body)
         static let descriptionTextViewFont: UIFont = .preferredFont(forTextStyle: .body)
 
+    }
+    
+    private enum Content {
+        
+        static let moreButtonTitle = "더보기"
+        
     }
     
 }

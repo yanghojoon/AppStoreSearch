@@ -1,5 +1,4 @@
 import UIKit
-import RxCocoa
 
 protocol ListCellDelegate: AnyObject {
     
@@ -22,7 +21,7 @@ final class ListCell: UICollectionViewCell {
             bottom: Design.containerStackViewVerticalInset,
             trailing: Design.containerStackViewHorizontalInset
         )
-        stackView.spacing = 10
+        stackView.spacing = Design.containerStackViewSpacing
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
@@ -30,8 +29,8 @@ final class ListCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Design.thumbnailImageViewCornerRadius
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.systemGray6.cgColor
+        imageView.layer.borderWidth = Design.thumbnailImageViewBorderWidth
+        imageView.layer.borderColor = Design.thumbnailImageViewBorderColor
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -79,9 +78,9 @@ final class ListCell: UICollectionViewCell {
         let button = UIButton()
         button.setTitleColor(Design.priceButtonTitleColor, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
-        button.titleLabel?.backgroundColor = .systemGray6
+        button.titleLabel?.backgroundColor = Design.priceButtonBackgroundColor
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.layer.cornerRadius = 10
+        button.titleLabel?.layer.cornerRadius = Design.priceButtonCornerRadius
         button.titleLabel?.clipsToBounds = true
         button.isUserInteractionEnabled = false
         return button
@@ -109,8 +108,7 @@ final class ListCell: UICollectionViewCell {
         genreLabel.text = nil
         userRatingCountLabel.text = nil
         priceButton.setTitle(nil, for: .normal)
-        ratingStackView.subviews.forEach { $0.removeFromSuperview()
-        }
+        ratingStackView.subviews.forEach { $0.removeFromSuperview() }
     }
     
     // MARK: - Methods
@@ -175,7 +173,7 @@ final class ListCell: UICollectionViewCell {
             
             ratingStackView.addArrangedSubview(imageView)
             
-            imageView.tintColor = .systemGray
+            imageView.tintColor = Design.starImageViewTintColor
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
             imageView.image = image
         }
@@ -188,8 +186,11 @@ extension ListCell {
     private enum Design {
         static let containerStackViewHorizontalInset: CGFloat = 10
         static let containerStackViewVerticalInset: CGFloat = 15
+        static let containerStackViewSpacing: CGFloat = 10
         
         static let thumbnailImageViewCornerRadius: CGFloat = 15
+        static let thumbnailImageViewBorderWidth: CGFloat = 2
+        static let thumbnailImageViewBorderColor = UIColor.systemGray6.cgColor
         
         static let nameLabelFont: UIFont = .preferredFont(forTextStyle: .headline)
         static let genreLabelFont: UIFont = .preferredFont(forTextStyle: .caption1)
@@ -202,5 +203,9 @@ extension ListCell {
         static let emptyStarImage = UIImage(systemName: "star")
         static let starImage = UIImage(systemName: "star.fill")
         static let halfStarImage = UIImage(systemName: "star.leadinghalf.filled")
+        
+        static let priceButtonCornerRadius: CGFloat = 10
+        static let priceButtonBackgroundColor: UIColor = .systemGray6
+        static let starImageViewTintColor: UIColor = .systemGray
     }
 }

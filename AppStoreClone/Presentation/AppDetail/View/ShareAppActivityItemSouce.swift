@@ -10,6 +10,7 @@ final class ShareAppActivityItemSouce: NSObject, UIActivityItemSource {
         self.content = content
     }
     
+    // MARK: - Methods
     func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
         content
     }

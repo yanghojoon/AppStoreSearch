@@ -20,22 +20,22 @@ final class SummaryScrollView: UIScrollView {
             bottom: Design.containerStackViewVerticalInset,
             trailing: Design.containerStackViewHorizontalInset
         )
-        stackView.spacing = 10
+        stackView.spacing = Design.contentStackViewSpacing
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     private let ratingTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .systemGray
+        label.font = Design.titleLabelFont
+        label.textColor = Design.titleLabelColor
         return label
     }()
     private let ratingContentLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .systemGray
+        label.font = Design.contentLabelFont
+        label.textColor = Design.contentLabelColor
         return label
     }()
     private let advisoryStackView: UIStackView = {
@@ -49,22 +49,22 @@ final class SummaryScrollView: UIScrollView {
             bottom: Design.containerStackViewVerticalInset,
             trailing: Design.containerStackViewHorizontalInset
         )
-        stackView.spacing = 10
+        stackView.spacing = Design.contentStackViewSpacing
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     private let advisoryTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .systemGray
+        label.font = Design.titleLabelFont
+        label.textColor = Design.titleLabelColor
         return label
     }()
     private let advisoryContentLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .systemGray
+        label.font = Design.contentLabelFont
+        label.textColor = Design.contentLabelColor
         return label
     }()
     private let developerStackView: UIStackView = {
@@ -78,22 +78,22 @@ final class SummaryScrollView: UIScrollView {
             bottom: Design.containerStackViewVerticalInset,
             trailing: Design.containerStackViewHorizontalInset
         )
-        stackView.spacing = 10
+        stackView.spacing = Design.contentStackViewSpacing
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     private let developerTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .systemGray
+        label.font = Design.titleLabelFont
+        label.textColor = Design.titleLabelColor
         return label
     }()
     private let developerContentLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .systemGray
+        label.font = Design.contentLabelFont
+        label.textColor = Design.titleLabelColor
         return label
     }()
     private let categoryStackView: UIStackView = {
@@ -107,22 +107,22 @@ final class SummaryScrollView: UIScrollView {
             bottom: Design.containerStackViewVerticalInset,
             trailing: Design.containerStackViewHorizontalInset
         )
-        stackView.spacing = 10
+        stackView.spacing = Design.contentStackViewSpacing
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     private let categoryTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .systemGray
+        label.font = Design.titleLabelFont
+        label.textColor = Design.titleLabelColor
         return label
     }()
     private let categoryContentLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .systemGray
+        label.font = Design.contentLabelFont
+        label.textColor = Design.contentLabelColor
         return label
     }()
     private let languageStackView: UIStackView = {
@@ -136,22 +136,22 @@ final class SummaryScrollView: UIScrollView {
             bottom: Design.containerStackViewVerticalInset,
             trailing: Design.containerStackViewHorizontalInset
         )
-        stackView.spacing = 10
+        stackView.spacing = Design.contentStackViewSpacing
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     private let languageTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .systemGray
+        label.font = Design.titleLabelFont
+        label.textColor = Design.titleLabelColor
         return label
     }()
     private let languageContentLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .systemGray
+        label.font = Design.contentLabelFont
+        label.textColor = Design.contentLabelColor
         return label
     }()
     
@@ -219,6 +219,13 @@ extension SummaryScrollView {
         
         static let containerStackViewHorizontalInset: CGFloat = 15
         static let containerStackViewVerticalInset: CGFloat = 15
+        static let contentStackViewSpacing: CGFloat = 10
+        
+        static let contentLabelFont: UIFont = .preferredFont(forTextStyle: .headline)
+        static let titleLabelFont: UIFont = .preferredFont(forTextStyle: .caption1)
+        
+        static let titleLabelColor: UIColor = .systemGray
+        static let contentLabelColor: UIColor = .systemGray
 
     }
     

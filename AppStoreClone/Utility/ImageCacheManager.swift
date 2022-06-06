@@ -1,6 +1,7 @@
 import UIKit
 
 final class ImageCacheManager {
+    
     static let shared = NSCache<NSString, UIImage>()
     private let memoryWarningNotification = UIApplication.didReceiveMemoryWarningNotification
     
@@ -18,4 +19,5 @@ final class ImageCacheManager {
     @objc func removeAll() {
         ImageCacheManager.shared.removeAllObjects()
     }
+    
 }

@@ -1,6 +1,5 @@
 import UIKit
 
-// MARK: - Delegate Protocol
 protocol TitleStackViewDelegate: AnyObject {
     
     func shareButtonDidTap()
@@ -14,8 +13,8 @@ final class TitleStackView: UIStackView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Design.thumbnailImageViewCornerRadius
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.systemGray6.cgColor
+        imageView.layer.borderWidth = Design.thumbnailImageViewBorderWidth
+        imageView.layer.borderColor = Design.thumbnailImageViewBorderColor
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -133,11 +132,13 @@ extension TitleStackView {
         
         static let thumbnailImageViewCornerRadius: CGFloat = 15
         static let priceButtonCornerRadius: CGFloat = 15
+        static let thumbnailImageViewBorderWidth: CGFloat = 2
         
         static let nameLabelFont: UIFont = .preferredFont(forTextStyle: .title3)
         static let producerLabelFont: UIFont = .preferredFont(forTextStyle: .caption1)
         static let priceButtonTitleFont: UIFont = .preferredFont(forTextStyle: .caption1)
         
+        static let thumbnailImageViewBorderColor: CGColor = UIColor.systemGray6.cgColor
         static let producerLabelTextColor: UIColor = .systemGray
         static let priceButtonTitleColor: UIColor = .systemBlue
         static let priceButtonBackgroundColor: UIColor = .systemGray6

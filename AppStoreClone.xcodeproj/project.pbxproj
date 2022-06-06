@@ -29,7 +29,6 @@
 		DE531A5528499ED200383973 /* Int+OmitDigit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A5428499ED200383973 /* Int+OmitDigit.swift */; };
 		DE531A572849A96300383973 /* ListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A562849A96300383973 /* ListCellViewModel.swift */; };
 		DE531A5B2849BA9600383973 /* AppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A5A2849BA9600383973 /* AppListViewModel.swift */; };
-		DE531A632849C7CE00383973 /* AppListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A622849C7CE00383973 /* AppListViewModelTests.swift */; };
 		DE531A6B2849C80900383973 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A6A2849C80900383973 /* MockURLSession.swift */; };
 		DE531A6F2849C8D300383973 /* MockNetworkProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A6E2849C8D300383973 /* MockNetworkProviderTests.swift */; };
 		DE531A712849CB3A00383973 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE531A702849CB3A00383973 /* JSONParserTests.swift */; };
@@ -80,7 +79,6 @@
 		DE531A562849A96300383973 /* ListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellViewModel.swift; sourceTree = "<group>"; };
 		DE531A5A2849BA9600383973 /* AppListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListViewModel.swift; sourceTree = "<group>"; };
 		DE531A602849C7CE00383973 /* AppStoreCloneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppStoreCloneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DE531A622849C7CE00383973 /* AppListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListViewModelTests.swift; sourceTree = "<group>"; };
 		DE531A6A2849C80900383973 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		DE531A6E2849C8D300383973 /* MockNetworkProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkProviderTests.swift; sourceTree = "<group>"; };
 		DE531A702849CB3A00383973 /* JSONParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
@@ -260,7 +258,6 @@
 			isa = PBXGroup;
 			children = (
 				DE531A692849C7FC00383973 /* Mock */,
-				DE531A622849C7CE00383973 /* AppListViewModelTests.swift */,
 				DE531A6E2849C8D300383973 /* MockNetworkProviderTests.swift */,
 				DE531A702849CB3A00383973 /* JSONParserTests.swift */,
 			);
@@ -451,7 +448,6 @@
 				DE531A6B2849C80900383973 /* MockURLSession.swift in Sources */,
 				DE531A6F2849C8D300383973 /* MockNetworkProviderTests.swift in Sources */,
 				DE531A712849CB3A00383973 /* JSONParserTests.swift in Sources */,
-				DE531A632849C7CE00383973 /* AppListViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

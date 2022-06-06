@@ -1,11 +1,14 @@
 import Foundation
 
 protocol APIProtocol {
+    
     var url: URL? { get }
     var method: HttpMethod { get }
+    
 }
 
 enum HttpMethod {
+    
     case get
     
     var description: String {
@@ -14,4 +17,5 @@ enum HttpMethod {
             return "GET"
         }
     }
+    
 }

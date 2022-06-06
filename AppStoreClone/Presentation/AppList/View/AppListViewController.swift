@@ -1,6 +1,5 @@
-import UIKit
 import RxSwift
-import RxCocoa
+import UIKit
 
 final class AppListViewController: UIViewController {
     

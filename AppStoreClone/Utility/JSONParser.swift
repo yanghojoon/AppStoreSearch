@@ -1,6 +1,7 @@
 import Foundation
 
-enum JSONParserError: LocalizedError { // TODO: LocalizedError만 있어도 되는지 확인
+enum JSONParserError: LocalizedError {
+    
     case decodingFail
     
     var errorDescription: String? {
@@ -9,9 +10,11 @@ enum JSONParserError: LocalizedError { // TODO: LocalizedError만 있어도 되�
             return "디코딩에 실패했습니다."
         }
     }
+    
 }
 
 struct JSONParser<Item: Decodable> {
+    
     func decode(from json: Data?) -> Item? {
         guard let data = json else {
             return nil
@@ -25,4 +28,5 @@ struct JSONParser<Item: Decodable> {
         
         return decodedData
     }
+    
 }

@@ -1,20 +1,23 @@
-import Foundation
 import UIKit
 
-class FlowCoordinator: Coordinator {
+final class FlowCoordinator: Coordinator {
     
+    // MARK: - Properties
     private let rootViewController: UINavigationController
     
+    // MARK: - Initializers
     init(rootViewController: UINavigationController) {
         self.rootViewController = rootViewController
     }
     
+    // MARK: - Methods
     func start() {
         showSearchBar()
     }
     
 }
 
+// MARK: - Actions
 extension FlowCoordinator {
     
     func showSearchBar() {
@@ -30,7 +33,7 @@ extension FlowCoordinator {
         let appDetailViewModel = AppDetailViewModel(app: app)
         let appDetailViewController = AppDetailViewController(viewModel: appDetailViewModel)
         
-        rootViewController.pushViewController(appDetailViewController, animated: true)
+        rootViewController.pushViewController(appDetailViewController, animated: false)
     }
     
 }
