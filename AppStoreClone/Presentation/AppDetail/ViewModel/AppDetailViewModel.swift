@@ -11,7 +11,7 @@ final class AppDetailViewModel {
     
     struct Output {
         
-        let titleItems: Observable<App>
+        let items: Observable<App>
         let showMoreContent: Observable<Void>
         
     }
@@ -25,7 +25,7 @@ final class AppDetailViewModel {
     func transform(_ input: Input) -> Output {
         let appItems = configureAppItemsObservable()
         
-        let ouput = Output(titleItems: appItems, showMoreContent: input.moreButtonDidTap)
+        let ouput = Output(items: appItems, showMoreContent: input.moreButtonDidTap)
         
         return ouput
     }

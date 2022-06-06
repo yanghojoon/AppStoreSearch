@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 
 final class AppDetailViewController: UIViewController {
     
@@ -29,6 +30,7 @@ final class AppDetailViewController: UIViewController {
             trailing: Design.containerStackViewHorizontalInset
         )
         stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.spacing = 5
         return stackView
     }()
     private let separatorView: UIView = {
@@ -62,6 +64,12 @@ final class AppDetailViewController: UIViewController {
     
     private let titleStackView = TitleStackView(frame: .zero)
     private let summaryScrollView = SummaryScrollView(frame: .zero)
+    private var screenshotCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewLayout()
+    )
+    private var diffableDataSource: UICollectionViewDiffableDataSource<ScreenshotSectionKind, String>!
+    private var snapshot: NSDiffableDataSourceSnapshot<ScreenshotSectionKind, String>!
     private var viewModel: AppDetailViewModel!
     private let disposeBag = DisposeBag()
     
@@ -74,6 +82,7 @@ final class AppDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureCollectionView()
         bind()
     }
     
@@ -84,6 +93,7 @@ final class AppDetailViewController: UIViewController {
         containerStackView.addArrangedSubview(titleStackView)
         containerStackView.addArrangedSubview(summaryScrollView)
         containerStackView.addArrangedSubview(separatorView)
+        containerStackView.addArrangedSubview(screenshotCollectionView)
         containerStackView.addArrangedSubview(descriptionTextView)
         containerStackView.addArrangedSubview(moreButton)
         
@@ -97,25 +107,34 @@ final class AppDetailViewController: UIViewController {
             containerStackView.leadingAnchor.constraint(equalTo: containerScrollView.leadingAnchor),
             containerStackView.trailingAnchor.constraint(equalTo: containerScrollView.trailingAnchor),
             containerStackView.bottomAnchor.constraint(equalTo: containerScrollView.bottomAnchor),
+            screenshotCollectionView.heightAnchor.constraint(equalTo: screenshotCollectionView.widthAnchor, multiplier: 1.15)
         ])
     }
     
-    private func createCollectionViewLayout(itemHeight: CGFloat, gruopHeight: CGFloat) -> UICollectionViewLayout {
+    private func configureCollectionView() {
+        screenshotCollectionView.isScrollEnabled = false
+        screenshotCollectionView.register(cellClass: ScreenshotCell.self)
+        screenshotCollectionView.collectionViewLayout = createCollectionViewLayout()
+        screenshotCollectionView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, environment -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(itemHeight)
+                heightDimension: .fractionalHeight(1.0)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
             
             let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(gruopHeight)
+                widthDimension: .fractionalWidth(0.7),
+                heightDimension: .fractionalHeight(1.0)
             )
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .groupPaging
             
             return section
         }
@@ -133,14 +152,14 @@ extension AppDetailViewController {
         
         let output = viewModel.transform(input)
         
-        configureAppItems(with: output.titleItems)
+        configureAppItems(with: output.items)
         configureShowMoreContent(with: output.showMoreContent)
     }
     
     private func configureAppItems(with appItems: Observable<App>) {
         appItems
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] app in
+            .flatMap { [weak self] app -> Observable<[String]> in
                 self?.titleStackView.apply(
                     thumnail: app.artworkUrl100,
                     name: app.trackName,
@@ -149,7 +168,26 @@ extension AppDetailViewController {
                 )
                 self?.summaryScrollView.apply(with: app)
                 self?.descriptionTextView.text = app.description
-            })
+                
+                return Observable.just(app.screenshotUrls)
+            }
+            .bind(to: screenshotCollectionView.rx.items(
+                cellIdentifier: String(describing: ScreenshotCell.self),
+                cellType: ScreenshotCell.self
+            )) { row, item, cell in
+                cell.apply(screenshotURL: item)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureScreenshot(with urls: Observable<[String]>) {
+        urls
+            .bind(to: screenshotCollectionView.rx.items(
+                cellIdentifier: String(describing: ScreenshotCell.self),
+                cellType: ScreenshotCell.self
+            )) { row, item, cell in
+                cell.apply(screenshotURL: item)
+            }
             .disposed(by: disposeBag)
     }
     
