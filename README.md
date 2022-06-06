@@ -1,4 +1,32 @@
-# 추가 기능 및 UI
+# 🏬 프로젝트 개요 
+[iTunes API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/Searching.html#//apple_ref/doc/uid/TP40017632-CH5-SW1)를 활용해 앱스토어 검색 및 검색 결과 / 상세 앱 정보를 보여줍니다. 
+
+## 🗂 파일 디렉토리 구조
+```
+├── AppStoreClone
+│   ├── App
+│   ├── Presentation
+│   │   ├── AppList
+│   │   │   ├── View
+│   │   │   └── ViewModel
+│   │   ├── AppDetail
+│   │   │   ├── View
+│   │   │   └── ViewModel
+│   ├── Network
+│   ├── Model
+│   ├── Protocol
+│   ├── Utiltiy
+│   ├── Extension
+│   └── Resource
+└── AppStoreCloneTests
+    └──Mock
+```
+
+## 사용한 오픈소스 / 프로젝트 정보
+- iOS Deployment Target : 따로 기준은 없었으나 현재 대부분의 앱이 iOS 13.0 이상으로 타겟을 잡고 있어 `iOS 13.0`으로 설정
+- `RxSwift` / `RxCocoa` : 비동기 처리를 return 값으로 처리하여 코드의 Depth를 줄이기 위해 사용
+
+# 😃 추가 기능 및 UI
 - URL을 통한 스크린샷 구현
     - `orthogonalScrollingBehavior`를 통해 `Pagination`을 구현했습니다.  
 - 받기 버튼은 구현하지 못했으나 이를 대체하여 가격 버튼(User Interaction은 안됨)을 추가 
