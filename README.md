@@ -22,8 +22,8 @@
     └──Mock
 ```
 
-## 사용한 오픈소스 / 프로젝트 정보
-- iOS Deployment Target : 따로 기준은 없었으나 현재 대부분의 앱이 iOS 13.0 이상으로 타겟을 잡고 있어 `iOS 13.0`으로 설정
+## 사용한 오픈소스 / 프로젝트 정보 / 의존성 관리 도구
+- iOS Deployment Target : CellRegistration 사용을 위해 최소 타겟인 `iOS 14.0`으로 설정
 - `RxSwift` / `RxCocoa` : 비동기 처리를 return 값으로 처리하여 코드의 Depth를 줄이기 위해 사용
 
 # 😃 추가 기능 및 UI
