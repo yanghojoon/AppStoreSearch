@@ -183,7 +183,9 @@ final class ListCell: UICollectionViewCell {
 
 // MARK: - Namespaces
 extension ListCell {
+    
     private enum Design {
+        
         static let containerStackViewHorizontalInset: CGFloat = 10
         static let containerStackViewVerticalInset: CGFloat = 15
         static let containerStackViewSpacing: CGFloat = 10
@@ -207,5 +209,7 @@ extension ListCell {
         static let priceButtonCornerRadius: CGFloat = 10
         static let priceButtonBackgroundColor: UIColor = .systemGray6
         static let starImageViewTintColor: UIColor = .systemGray
+        
     }
+    
 }

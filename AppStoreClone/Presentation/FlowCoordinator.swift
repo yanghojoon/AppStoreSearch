@@ -20,7 +20,7 @@ final class FlowCoordinator: Coordinator {
 // MARK: - Actions
 extension FlowCoordinator {
     
-    func showSearchBar() {
+    private func showSearchBar() {
         let actions = AppListViewAction(showDetailPage: showDetail(with:))
         let appListViewModel = AppListViewModel(actions: actions)
         let listCellViewModel = ListCellViewModel()
@@ -29,7 +29,7 @@ extension FlowCoordinator {
         rootViewController.pushViewController(appListViewController, animated: true)
     }
     
-    func showDetail(with app: App) {
+    private func showDetail(with app: App) {
         let appDetailViewModel = AppDetailViewModel(app: app)
         let appDetailViewController = AppDetailViewController(viewModel: appDetailViewModel)
         
